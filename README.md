@@ -5,7 +5,7 @@ Projects I made while learning C++ starting from 10.02.2026
 None
 
 ## Projects in progress
-Minesweeper - console-based game. Requires: reading keyboard input.
+Minesweeper - console-based game. Requires: reading keyboard input. Also most likely will have to learn to properly use git and cmake.
 
 ## Planned projects
 Snake - console-based game. Requires: reading keyboard input, fun with time.
