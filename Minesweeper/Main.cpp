@@ -1,5 +1,3 @@
-
-#include <iostream>
 #include"MinesBoard.h"
 
 // 10 mines
@@ -12,7 +10,7 @@ void Draw(MinesBoard Board)
         for (int j = 0; j < ROWS + 2; j++)
         {
             if (j == 0 && i > 0)
-                std::cout << i - 1;
+                std::cout << i ;
             else if (j == 1 && i > 0)
                 std::cout << "| ";
 
@@ -31,7 +29,10 @@ void Draw(MinesBoard Board)
 int main()
 {
     // system("clear");
+    srand(time(0));
     // char Board[ROWS][COLUMNS];
     MinesBoard Board;
+    Board.SetBoard();
+    // Board.SetTile(4,6,'x');
     Draw(Board);
 }
