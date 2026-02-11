@@ -30,9 +30,8 @@ int main()
 {
     // system("clear");
     srand(time(0));
-    // char Board[ROWS][COLUMNS];
     MinesBoard Board;
     Board.SetBoard();
-    // Board.SetTile(4,6,'x');
     Draw(Board);
+
 }
