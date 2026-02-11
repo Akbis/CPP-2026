@@ -1,3 +1,0 @@
-/home/albert/Projects/CPP-2026/Minesweeper/build/CMakeFiles/Minesweeper.dir
-/home/albert/Projects/CPP-2026/Minesweeper/build/CMakeFiles/edit_cache.dir
-/home/albert/Projects/CPP-2026/Minesweeper/build/CMakeFiles/rebuild_cache.dir
