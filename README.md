@@ -1,5 +1,5 @@
 # CPP-2026
-Projects I made while learning C++ starting from 10.02.2026
+Projects made while learning C++ starting from 10.02.2026
 
 ## Completed Projects
 None
