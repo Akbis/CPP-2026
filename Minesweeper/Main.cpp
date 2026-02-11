@@ -1,9 +1,10 @@
 #define ROWS 8
 #define COLUMNS 8
 #include <iostream>
+#include"MinesBoard.h"
 
 // 10 mines
-void Draw()
+void Draw(char Board[ROWS][COLUMNS])
 {
     std::cout << "   ";
     for (int i = 0; i < COLUMNS + 1; i++)
@@ -31,5 +32,6 @@ void Draw()
 int main()
 {
     // system("clear");
-    Draw();
+    char Board[ROWS][COLUMNS];
+    Draw(Board);
 }
