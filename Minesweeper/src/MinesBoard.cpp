@@ -1,6 +1,6 @@
 #include"MinesBoard.h"
 
-MinesBoard::MinesBoard(){
+MinesBoard::MinesBoard(){ 
     for (int i = 0; i < ROWS; i++)
     {
         for (int j = 0; j < COLUMNS; j++)
@@ -40,6 +40,8 @@ void MinesBoard::SetBoard(){
 }
 
 // This one is an abomination, should kill it with fire but it works
+// Possibly could be done with vector of chars filled by functoin Surrounding(), but this implementation would work only for this function
+// Using vector of pointers to tiles probably would be better, maybe will do it in GUI version if it happens
 char MinesBoard::CountSurroundingMines(int row, int column){ // returning char cause mines
     int count = 0;  // will be converted to char ASCII for 0 is 48
     if(tiles[row][column]=='X'){
@@ -74,7 +76,7 @@ char MinesBoard::CountSurroundingMines(int row, int column){ // returning char c
         if(tiles[row-1][column+1]=='X') count++;
         if(tiles[row][column+1]=='X') count++;
         if(tiles[row+1][column]=='X') count++;
-        if(tiles[row+1][column+1]=='X') count++; //there HAS to be a better way, this is ugly af
+        if(tiles[row+1][column+1]=='X') count++;
     }
     else if (column==COLUMNS-1 && row>0 && row<ROWS-1){ //edge case 4
         if(tiles[row-1][column-1]=='X') count++;
@@ -89,7 +91,7 @@ char MinesBoard::CountSurroundingMines(int row, int column){ // returning char c
         if(tiles[row+1][column+1]=='X') count++;
     }
     else if (row==ROWS-1 && column==0){ //corner case 2
-        if(tiles[row][column+1]=='X') count++; //only 2 to go
+        if(tiles[row][column+1]=='X') count++;
         if(tiles[row-1][column]=='X') count++;
         if(tiles[row-1][column+1]=='X') count++;
     }
@@ -103,8 +105,9 @@ char MinesBoard::CountSurroundingMines(int row, int column){ // returning char c
         if(tiles[row-1][column]=='X') count++;
         if(tiles[row-1][column-1]=='X') count++;
     }
-    else 
+    else // Should not be necessary, but just in case
         std::cout<<"Error. Now check all the ifs";
     
     return (char)(count+48);
 }
+
