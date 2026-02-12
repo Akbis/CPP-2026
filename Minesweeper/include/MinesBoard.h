@@ -13,6 +13,7 @@
 class MinesBoard{
     int number_of_mines=10;
     char tiles[ROWS][COLUMNS];
+    char shownTiles[ROWS][COLUMNS];
     // std::array<std::array<char, ROWS>,COLUMNS> tiles;
 
 
@@ -21,11 +22,15 @@ public:
     void SetBoard();                    // board setup before start
     char GetTile(int,int);              // get value of tile at coordinates
     void SetTile(int, int, char);       // set value of tile at coordinates
+    char GetShownTile(int, int);             // get value of tile at coordinates
+    void SetShownTile(int, int, char);       // set value of tile at coordinates
     char CountSurroundingMines(int,int); // calculates number of mines in 8 surrounding tiles. NOTE: beware of edge cases and corner cases
+    void Dig(int, int,bool);
+
 };
 
 // IDEA: do all the setup for the board, then create another board on top of it which will be used for display.
-void Dig(MinesBoard real, MinesBoard visible, int row, int column, bool gameOver);
+// void Dig(MinesBoard, /*MinesBoard,*/ int, int, bool);
     // void Dig(MinesBoard real,MinesBoard visible,int row,int column,bool gameOver){
     //     if(real.GetTile(row,column)=='X')
     //     {
