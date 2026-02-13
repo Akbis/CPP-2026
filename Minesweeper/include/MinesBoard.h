@@ -1,7 +1,7 @@
 #pragma once
 
-#define ROWS 8
-#define COLUMNS 8
+#define ROWS 16
+#define COLUMNS 16
 
 #include <iostream>
 #include<cstdlib>

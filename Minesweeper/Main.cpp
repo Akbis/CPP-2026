@@ -9,8 +9,11 @@ void Draw(MinesBoard Board)
 
         for (int j = 0; j < ROWS + 2; j++)
         {
-            if (j == 0 && i > 0)
+            if (j == 0 && i > 0){
+                if(i<10)
+                    std::cout<<" ";
                 std::cout << i ;
+            }
             else if (j == 1 && i > 0)
                 std::cout << "| ";
 
@@ -36,7 +39,11 @@ void theDraw(MinesBoard Board)
         for (int j = 0; j < ROWS + 2; j++)
         {
             if (j == 0 && i > 0)
+            {
+                if (i < 10)
+                    std::cout << " ";
                 std::cout << i;
+            }
             else if (j == 1 && i > 0)
                 std::cout << "| ";
 
@@ -56,14 +63,15 @@ void theDraw(MinesBoard Board)
 int main()
 {
     bool gameOver=false;
-    // system("clear");
+    system("clear");
     srand(time(0));
     MinesBoard Board;
     Board.SetBoard();
     Draw(Board);
     theDraw(Board);
     // BoardVirtual.SetTile(1,1,'k');
-    Draw(Board);
-
+    Board.Dig(2,3,gameOver);
+    // Draw(Board);
+    theDraw(Board);
 }
 
