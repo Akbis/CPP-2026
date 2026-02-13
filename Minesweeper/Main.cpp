@@ -49,9 +49,7 @@ void theDraw(MinesBoard Board)
 
             if (i == 0 && j > 1)
                 std::cout << (char)(j + 63) << " ";
-            // else if (i==1 && j>1)
-            //     std::cout<<"__";
-
+                
             else if (i > 0 && j > 1)
                 std::cout << Board.GetShownTile(i - 1, j - 2) << " ";
         }
@@ -69,9 +67,7 @@ int main()
     Board.SetBoard();
     Draw(Board);
     theDraw(Board);
-    // BoardVirtual.SetTile(1,1,'k');
     Board.Dig(2,3,gameOver);
-    // Draw(Board);
     theDraw(Board);
 }
 

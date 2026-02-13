@@ -36,7 +36,7 @@ void MinesBoard::SetBoard(){
     std::random_shuffle(temp_mines.begin(),temp_mines.end());
     for(int i=0;i<number_of_mines;i++)
     {
-        SetTile(temp_mines[i]/8,temp_mines[i]%8,'X');
+        SetTile(temp_mines[i]/ROWS,temp_mines[i]%ROWS,'X');
         // std::cout<<temp_mines.at(i)<<" ";
     }
 
