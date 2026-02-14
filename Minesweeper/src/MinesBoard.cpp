@@ -6,6 +6,7 @@ MinesBoard::MinesBoard(){
         for (int j = 0; j < COLUMNS; j++)
         {
             tiles[i][j]='*';
+            shownTiles[i][j]='*';
         }   
     }    
 }
@@ -18,6 +19,16 @@ void MinesBoard::SetTile(int row, int column, char value){
     tiles[row][column]=value;
 }
 
+char MinesBoard::GetShownTile(int row, int column)
+{
+    return shownTiles[row][column];
+}
+
+void MinesBoard::SetShownTile(int row, int column, char value)
+{
+    shownTiles[row][column] = value;
+}
+
 void MinesBoard::SetBoard(){
     //Setting mines, if entire funcions becomes unreadable move this part to its own function SetMines()
     std::vector<int> temp_mines(ROWS*COLUMNS);
@@ -25,7 +36,7 @@ void MinesBoard::SetBoard(){
     std::random_shuffle(temp_mines.begin(),temp_mines.end());
     for(int i=0;i<number_of_mines;i++)
     {
-        SetTile(temp_mines[i]/8,temp_mines[i]%8,'X');
+        SetTile(temp_mines[i]/ROWS,temp_mines[i]%ROWS,'X');
         // std::cout<<temp_mines.at(i)<<" ";
     }
 
@@ -111,90 +122,94 @@ char MinesBoard::CountSurroundingMines(int row, int column){ // returning char c
     return (char)(count+48);
 }
 
-// void Dig(MinesBoard real, MinesBoard visible, int row, int column, bool gameOver)
-// {
-//     if (real.GetTile(row, column) == 'X')
-//     {
-//         std::cout<<"Mina!";
-//         gameOver = true;
-//     }
-//     else if (real.GetTile(row, column) == '0') // there goes all the stuff
-//     {
-//         visible.SetTile(row, column, 0);
-//         if (row > 0 && column > 0 && row < ROWS - 1 && column < COLUMNS - 1)
-//         { // here we go again
-//             Dig(real, visible, row - 1, column - 1, gameOver);
-//             Dig(real, visible, row - 1, column, gameOver);
-//             Dig(real, visible, row - 1, column + 1, gameOver);
-//             Dig(real, visible, row, column - 1, gameOver);
-//             Dig(real, visible, row, column + 1, gameOver);
-//             Dig(real, visible, row + 1, column - 1, gameOver);
-//             Dig(real, visible, row + 1, column, gameOver);
-//             Dig(real, visible, row + 1, column + 1, gameOver);
-//             std::cout<<"test 0";
-//         }
-//         else if (row == 0 && column > 0 && column < COLUMNS - 1)
-//         { // edge case 1
-//             Dig(real, visible, row, column - 1, gameOver);
-//             Dig(real, visible, row, column + 1, gameOver);
-//             Dig(real, visible, row + 1, column - 1, gameOver);
-//             Dig(real, visible, row + 1, column, gameOver);
-//             Dig(real, visible, row + 1, column + 1, gameOver);
-//         }
-//         else if (row == ROWS - 1 && column > 0 && column < COLUMNS - 1)
-//         { // edge case 2
-//             Dig(real, visible, row - 1, column - 1, gameOver);
-//             Dig(real, visible, row - 1, column, gameOver);
-//             Dig(real, visible, row - 1, column + 1, gameOver);
-//             Dig(real, visible, row, column - 1, gameOver);
-//             Dig(real, visible, row, column + 1, gameOver);
-//         }
-//         else if (column == 0 && row > 0 && row < ROWS - 1)
-//         { // edge case 3
-//             Dig(real, visible, row - 1, column + 1, gameOver);
-//             Dig(real, visible, row, column + 1, gameOver);
-//             Dig(real, visible, row + 1, column + 1, gameOver);
-//             Dig(real, visible, row - 1, column, gameOver);
-//             Dig(real, visible, row + 1, column, gameOver);
-//         }
-//         else if (column == COLUMNS - 1 && row > 0 && row < ROWS - 1)
-//         { // edge case 4
-//             Dig(real, visible, row - 1, column - 1, gameOver);
-//             Dig(real, visible, row, column - 1, gameOver);
-//             Dig(real, visible, row + 1, column - 1, gameOver);
-//             Dig(real, visible, row - 1, column, gameOver);
-//             Dig(real, visible, row + 1, column, gameOver);
-//         }
-//         else if (row == 0 && column == 0)
-//         { // corner case 1
-//             Dig(real, visible, row, column + 1, gameOver);
-//             Dig(real, visible, row + 1, column, gameOver);
-//             Dig(real, visible, row + 1, column + 1, gameOver);
-//         }
-//         else if (row == ROWS - 1 && column == 0)
-//         { // corner case 2
-//             Dig(real, visible, row - 1, column, gameOver);
-//             Dig(real, visible, row - 1, column + 1, gameOver);
-//             Dig(real, visible, row, column + 1, gameOver);
-//         }
-//         else if (row == 0 && column == COLUMNS - 1)
-//         { // corner case 3
-//             Dig(real, visible, row, column - 1, gameOver);
-//             Dig(real, visible, row + 1, column - 1, gameOver);
-//             Dig(real, visible, row + 1, column, gameOver);
-//         }
-//         else if (row == ROWS - 1 && column == COLUMNS - 1)
-//         { // corner case 4
-//             Dig(real, visible, row - 1, column, gameOver);
-//             Dig(real, visible, row - 1, column - 1, gameOver);
-//             Dig(real, visible, row, column - 1, gameOver);
-//         }
-//         else // Should not be necessary, but just in case
-//             std::cout << "Error. Now check all the ifs, this time in Dig()";
-//     }
-//     else
-//     {
-//         visible.SetTile(row, column, real.GetTile(row, column));
-//         std::cout << "test 1";
-//     }
-// }
+void MinesBoard::Dig(int row, int column, bool gameOver)
+{
+
+    if((GetShownTile(row,column)=='*') && !gameOver){
+        if (GetTile(row, column) == 'X')
+        {
+            std::cout << "Mina!\n";
+            gameOver = true;
+        }
+        else if (GetTile(row, column) == '0') // there goes all the stuff
+        {//this wont work bacause mind two neighboring 0's
+            SetShownTile(row, column, '0');
+            if (row > 0 && column > 0 && row < ROWS - 1 && column < COLUMNS - 1)
+            { // here we go again
+                Dig(row - 1, column - 1, gameOver);
+                Dig(row - 1, column, gameOver);
+                Dig(row - 1, column + 1, gameOver);
+                Dig(row, column - 1, gameOver);
+                Dig(row, column + 1, gameOver);
+                Dig(row + 1, column - 1, gameOver);
+                Dig(row + 1, column, gameOver);
+                Dig(row + 1, column + 1, gameOver);
+            }
+            else if (row == 0 && column > 0 && column < COLUMNS - 1)
+            { // edge case 1
+                Dig(row, column - 1, gameOver);
+                Dig(row, column + 1, gameOver);
+                Dig(row + 1, column - 1, gameOver);
+                Dig(row + 1, column, gameOver);
+                Dig(row + 1, column + 1, gameOver);
+            }
+            else if (row == ROWS - 1 && column > 0 && column < COLUMNS - 1)
+            { // edge case 2
+                Dig(row - 1, column - 1, gameOver);
+                Dig(row - 1, column, gameOver);
+                Dig(row - 1, column + 1, gameOver);
+                Dig(row, column - 1, gameOver);
+                Dig(row, column + 1, gameOver);
+            }
+            else if (column == 0 && row > 0 && row < ROWS - 1)
+            { // edge case 3
+                Dig(row - 1, column + 1, gameOver);
+                Dig(row, column + 1, gameOver);
+                Dig(row + 1, column + 1, gameOver);
+                Dig(row - 1, column, gameOver);
+                Dig(row + 1, column, gameOver);
+            }
+            else if (column == COLUMNS - 1 && row > 0 && row < ROWS - 1)
+            { // edge case 4
+                Dig(row - 1, column - 1, gameOver);
+                Dig(row, column - 1, gameOver);
+                Dig(row + 1, column - 1, gameOver);
+                Dig(row - 1, column, gameOver);
+                Dig(row + 1, column, gameOver);
+            }
+            else if (row == 0 && column == 0)
+            { // corner case 1
+                Dig(row, column + 1, gameOver);
+                Dig(row + 1, column, gameOver);
+                Dig(row + 1, column + 1, gameOver);
+            }
+            else if (row == ROWS - 1 && column == 0)
+            { // corner case 2
+                Dig(row - 1, column, gameOver);
+                Dig(row - 1, column + 1, gameOver);
+                Dig(row, column + 1, gameOver);
+            }
+            else if (row == 0 && column == COLUMNS - 1)
+            { // corner case 3
+                Dig(row, column - 1, gameOver);
+                Dig(row + 1, column - 1, gameOver);
+                Dig(row + 1, column, gameOver);
+            }
+            else if (row == ROWS - 1 && column == COLUMNS - 1)
+            { // corner case 4
+                Dig(row - 1, column, gameOver);
+                Dig(row - 1, column - 1, gameOver);
+                Dig(row, column - 1, gameOver);
+            }
+            else // Should not be necessary, but just in case
+                std::cout << "Error. Now check all the ifs, this time in Dig()";
+        }
+        else
+        {
+            // visible.SetTile(row, column, real.GetTile(row, column));
+            // SetShownTile(row,column,'2');
+            SetShownTile(row,column,GetTile(row,column));
+            // visible.SetTile(5,5, '2');
+        }
+    }
+}
