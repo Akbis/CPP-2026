@@ -1,9 +1,8 @@
 #include"MinesBoard.h"
 
-// 10 mines
 void Draw(MinesBoard Board)
 {
-    std::cout << "   ";
+    std::cout << "    ";
     for (int i = 0; i < COLUMNS + 1; i++)
     {
 
@@ -19,8 +18,6 @@ void Draw(MinesBoard Board)
 
             if (i == 0 && j > 1)
                 std::cout << (char)(j + 63) << " ";
-            // else if (i==1 && j>1)
-            //     std::cout<<"__";
 
             else if (i > 0 && j > 1)
                 std::cout << Board.GetTile(i-1,j-2)<<" ";
@@ -32,7 +29,7 @@ void Draw(MinesBoard Board)
 
 void theDraw(MinesBoard Board)
 {
-    std::cout << "   ";
+    std::cout << "    ";
     for (int i = 0; i < COLUMNS + 1; i++)
     {
 
@@ -70,4 +67,15 @@ int main()
     Board.Dig(2,3,gameOver);
     theDraw(Board);
 }
+
+/* TODO:
+1. implement reading user input
+2. put logic into while loop on bool gameOver
+3. imake flagging mines possible
+4. add flavor text
+5. make it so first tile discovered is always '0'
+6. look into text formating, if posible add colors, also if cout cannot format output switch to printf
+7. Clean up the code (get rid of Draw and theDraw, one is enough)
+*/
+
 
