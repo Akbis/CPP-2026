@@ -37,7 +37,6 @@ void MinesBoard::SetBoard(){
     for(int i=0;i<number_of_mines;i++)
     {
         SetTile(temp_mines[i]/ROWS,temp_mines[i]%ROWS,'X');
-        // std::cout<<temp_mines.at(i)<<" ";
     }
 
     //Setting tiles
@@ -206,10 +205,7 @@ void MinesBoard::Dig(int row, int column, bool gameOver)
         }
         else
         {
-            // visible.SetTile(row, column, real.GetTile(row, column));
-            // SetShownTile(row,column,'2');
             SetShownTile(row,column,GetTile(row,column));
-            // visible.SetTile(5,5, '2');
         }
     }
 }
