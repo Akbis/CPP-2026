@@ -1,6 +1,7 @@
 #include"MinesBoard.h"
 #include"MinesColors.h"
 #include<iomanip>
+#include<string>
 
 void Draw(MinesBoard Board)
 {
@@ -20,7 +21,6 @@ void Draw(MinesBoard Board)
                 std::cout << (char)(j + 63) << " ";
 
             else if (i > 0 && j > 1)
-                // std::cout << Board.GetTile(i-1,j-2)<<" ";
                 PrintTiles(Board.GetTile(i-1,j-2));
         }
         std::cout << '\n';
@@ -54,17 +54,53 @@ void theDraw(MinesBoard Board)
     std::cout << '\n';
 }
 
+void ParseInput(std::string coords){
+    // coords.erase(std::remove(coords.begin(), coords.end(), ' '), coords.end());
+    // std::cout<<coords<<'\n';
+    if(coords.length()<2){
+        std::cout << "Błędne współrzędne!\n";
+        std::cout << "Podaj poprawne współrzędne pola: ";
+        std::cin >> coords;
+        ParseInput(coords);
+    }
+    // std::vector<int> coordinates;
+    // char xAxis=coords[0];
+    // char yAxis;
+    int x,y;
+    // x=(int)xAxis-64;
+    x=toupper(coords.at(0))-64;
+    if(x<1 || x>COLUMNS){
+        std::cout << "Błędne współrzędne!\n";
+        std::cout << "Podaj poprawne współrzędne pola: ";
+        std::cin>>coords;
+        ParseInput(coords);
+    }
+    coords.erase(0,1);
+    // y=at
+    std::cout<<coords<<'\n';
+    std::cout<<x<<std::endl;
+
+}
+
 int main()
 {
     bool gameOver=false;
+    std::string coords;
+    char xAxis,yAxis;
+
     system("clear");
     srand(time(0));
     MinesBoard Board;
     Board.SetBoard();
-    Draw(Board);
-    theDraw(Board);
-    Board.Dig(2,3,gameOver);
-    theDraw(Board);
+
+    std::cout<< "Podaj współrzędne pola: ";
+    std::cin>>coords;
+    ParseInput(coords);
+
+    // Draw(Board);
+    // theDraw(Board);
+    // Board.Dig(2,3,gameOver);
+    // theDraw(Board);
 }
 
 /* TODO:
@@ -73,7 +109,7 @@ int main()
 3. imake flagging mines possible
 4. add flavor text
 5. make it so first tile discovered is always '0'
-6. look into text formating, if posible add colors, also if cout cannot format output switch to printf
+6. look into text formating, if posible add colors, also if cout cannot format output switch to printf      DONE
 7. Clean up the code (get rid of Draw and theDraw, one is enough)
 */
 
