@@ -11,19 +11,24 @@ std::vector<int> ParseInput();
 int main()
 {
     bool gameOver=false;
-    char xAxis,yAxis;
 
     // system("clear");
     srand(time(0));
     MinesBoard Board;
     Board.SetBoard();
-
-
-    // std::cin>>coords;
-    std::vector<int> tile=ParseInput();
-    for(int e:tile){
-        std::cout<< e <<" ";
+    Draw(Board);
+    while(!gameOver){
+        theDraw(Board);
+        std::vector<int> coordinates = ParseInput();
+        Board.Dig(coordinates.at(1)-1,coordinates.at(0),gameOver);
+        if (Board.GetTile(coordinates.at(1)-1, coordinates.at(0))=='X'){
+            gameOver = true;
+            std::cout<<"Game over\n";
+        }
+        
     }
+
+
 
     // Draw(Board);
     // theDraw(Board);
@@ -104,11 +109,11 @@ std::vector<int> ParseInput()
     else
     {
         // x=(int)xAxis-64;
-        x = toupper(coords.at(0)) - 64;
+        x = toupper(coords.at(0)) - 65;
         std::cout<<x<<" :x\n";
         coordinates[0]=x;
         std::cout << coordinates[0]<<"\n";
-        if (x < 1 || x > COLUMNS)
+        if (x < 1 || x > COLUMNS-1)
         {
             std::cout << "0";
             std::cout << "Błędne współrzędne!\n";
@@ -132,6 +137,13 @@ std::vector<int> ParseInput()
             catch (const std::out_of_range &e)
             {
                 std::cout << "2";
+                std::cout << "Błędne współrzędne!\n";
+                // std::cout << "Podaj poprawne współrzędne pola: ";
+                coordinates = ParseInput(); 
+            }
+            if (y < 1 || y > ROWS )
+            {
+                std::cout << "0";
                 std::cout << "Błędne współrzędne!\n";
                 // std::cout << "Podaj poprawne współrzędne pola: ";
                 coordinates = ParseInput();
