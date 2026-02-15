@@ -11,6 +11,7 @@
 #include<numeric>
 
 class MinesBoard{
+    int uncovered_tiles=0;
     int number_of_mines=10;
     char tiles[ROWS][COLUMNS];
     char shownTiles[ROWS][COLUMNS];
@@ -25,7 +26,8 @@ public:
     char GetShownTile(int, int);            // get value of tile at coordinates
     void SetShownTile(int, int, char);      // set value of tile at coordinates
     char CountSurroundingMines(int,int);    // calculates number of mines in 8 surrounding tiles. NOTE: beware of edge cases and corner cases
-    void Dig(int, int,bool);                // discovers tile on if it equals '0' also surrounding tiles
+    void Dig(int, int);                // discovers tile on if it equals '0' also surrounding tiles
+    bool IsGameWon();
 };
 
 /* Two Board Implementation:

@@ -20,7 +20,13 @@ int main()
     while(!gameOver){
         theDraw(Board);
         std::vector<int> coordinates = ParseInput();
-        Board.Dig(coordinates.at(1)-1,coordinates.at(0),gameOver);
+        if (Board.GetShownTile(coordinates.at(1) - 1, coordinates.at(0))=='*')
+            Board.Dig(coordinates.at(1) - 1, coordinates.at(0));
+        else{
+            std::cout << "Błędne współrzędne! Wybrane pole jest już odkryte\n";
+            coordinates = ParseInput();
+        }
+
         if (Board.GetTile(coordinates.at(1)-1, coordinates.at(0))=='X'){
             gameOver = true;
             std::cout<<"Game over\n";
@@ -96,28 +102,19 @@ std::vector<int> ParseInput()
     int x, y;
     std::vector<int> coordinates(2,-1);
     coords.erase(std::remove(coords.begin(), coords.end(), ' '), coords.end());
-    std::cout<<coords<<'\n';
     if (coords.length() < 2)
     {
         std::cout << "Błędne współrzędne!\n";
-        // std::cout << "Podaj poprawne współrzędne pola: ";
         coordinates = ParseInput();
     }
-
-    // char xAxis=coords[0];
-    // char yAxis;
     else
     {
         // x=(int)xAxis-64;
         x = toupper(coords.at(0)) - 65;
-        std::cout<<x<<" :x\n";
         coordinates[0]=x;
-        std::cout << coordinates[0]<<"\n";
         if (x < 1 || x > COLUMNS-1)
         {
-            std::cout << "0";
             std::cout << "Błędne współrzędne!\n";
-            // std::cout << "Podaj poprawne współrzędne pola: ";
             coordinates=ParseInput();
         }
         else{
@@ -129,23 +126,17 @@ std::vector<int> ParseInput()
             }
             catch (const std::invalid_argument &e)
             {
-                std::cout << "1";
                 std::cout << "Błędne współrzędne!\n";
-                // std::cout << "Podaj poprawne współrzędne pola: ";
                 coordinates = ParseInput();
             }
             catch (const std::out_of_range &e)
             {
-                std::cout << "2";
                 std::cout << "Błędne współrzędne!\n";
-                // std::cout << "Podaj poprawne współrzędne pola: ";
                 coordinates = ParseInput(); 
             }
             if (y < 1 || y > ROWS )
             {
-                std::cout << "0";
                 std::cout << "Błędne współrzędne!\n";
-                // std::cout << "Podaj poprawne współrzędne pola: ";
                 coordinates = ParseInput();
             }
         }
