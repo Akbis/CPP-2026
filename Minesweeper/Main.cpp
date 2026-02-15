@@ -153,13 +153,13 @@ std::vector<int> ParseInput()
 
 
 /* TODO:
-1. implement reading user input
-2. put logic into while loop on bool gameOver
-3. imake flagging mines possible
+1. implement reading user input                                                                             DONE
+2. put logic into while loop on bool gameOver                                                               DONE            
+3. imake flagging mines possible                                                                            DONE
 4. add flavor text
 5. make it so first tile discovered is always '0'
 6. look into text formating, if posible add colors, also if cout cannot format output switch to printf      DONE
-7. Clean up the code (get rid of Uncover and Draw, one is enough)
+7. Clean up the code
 */
 
 
