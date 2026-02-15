@@ -1,45 +1,53 @@
 #include"MinesColors.h"
 
 void PrintTiles(char tile){
-    if(tile=='X'){
+    switch (tile){
+    case 'X':
         std::cout<<REDBLACK<<tile<<RESET<<" ";
-    }
-    else if (tile == '0')
-    {
+        break;
+    
+    case '0': 
         std::cout << BOLDWHITE << tile << RESET << " ";
-    }
-    else if (tile == '1')
-    {
+        break;
+        
+    case '1':  
         std::cout << BOLDBLUE << tile << RESET << " ";
-    }
-    else if (tile == '2')
-    {
+        break;
+
+    case '2':   
         std::cout << BOLDGREEN << tile << RESET << " ";
-    }
-    else if (tile == '3')
-    {
+        break;
+
+    case '3':   
         std::cout << GREEN << tile << RESET << " ";
-    }
-    else if (tile == '4')
-    {
+        break;
+
+    case '4':   
         std::cout << BOLDYELLOW << tile << RESET << " ";
-    }
-    else if (tile == '5')
-    {
+        break;
+
+    case '5':  
         std::cout << MAGENTA << tile << RESET << " ";
-    }
-    else if (tile == '6')
-    {
+        break;
+
+    case '6':   
         std::cout << RED << tile << RESET << " ";
-    }
-    else if (tile == '7')
-    {
+        break;
+
+    case '7':
         std::cout << BOLDRED << tile << RESET << " ";
-    }
-    else if (tile == '8')
-    {
+        break;
+
+    case '8':
         std::cout << BOLDMAGENTA << tile << RESET << " ";
-    }
-    else
+        break;
+
+    case 'F':
+         std::cout << BOLDCYAN << tile << RESET << " ";
+         break;
+
+    default:
         std::cout << tile << " ";
+        break;
+    }
 }

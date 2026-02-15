@@ -124,10 +124,12 @@ char MinesBoard::CountSurroundingMines(int row, int column){ // returning char c
 void MinesBoard::Dig(int row, int column)
 {
 
-    if(GetShownTile(row,column)=='*'){
+    if (GetShownTile(row, column) == '*' || GetShownTile(row, column) == 'F')
+    {
         if (GetTile(row, column) == 'X')
         {
             std::cout << "Mina!\n";
+            isGameLost=true;
         }
         else if (GetTile(row, column) == '0') // there goes all the stuff
         {//this wont work bacause mind two neighboring 0's
@@ -209,9 +211,44 @@ void MinesBoard::Dig(int row, int column)
             SetShownTile(row,column,GetTile(row,column));
         }
     }
-    std::cout<<"\n"<<uncovered_tiles<<"\n";
 }
 
 bool MinesBoard::IsGameWon(){
     return !(ROWS*COLUMNS-uncovered_tiles-number_of_mines);
+}
+
+bool MinesBoard::IsGameLost(){
+    return isGameLost;
+}
+
+
+
+void MinesBoard::ChooseAction(int x, int y)
+{
+    std::cout << "Wybierz akcję:\n";
+    std::cout << "Z - Odkryj pole    X - Oflaguj pole\n";
+    std::string input;
+    std::getline(std::cin, input);
+    while (input.length() > 1)
+    {
+        std::cout << "Błędny argument\n";
+        std::cout << "Podaj poprawny argument: ";
+        std::getline(std::cin, input);
+    }
+    char action = toupper(input.at(0));
+    switch (action)
+    {
+    case 'Z':
+        // std::cout << action;
+        Dig(x, y);
+        break;
+    case 'X':
+        SetShownTile(x, y, 'F');
+        break;
+    default:
+        std::cout << "Błędny argument\n";
+        std::cout << "Podaj poprawny argument: ";
+        ChooseAction(x, y);
+        break;
+    }
 }

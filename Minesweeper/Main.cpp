@@ -3,8 +3,8 @@
 #include<iomanip>
 #include<string>
 
+void Uncover(MinesBoard Board);
 void Draw(MinesBoard Board);
-void theDraw(MinesBoard Board);
 void InputError(std::string coords);
 std::vector<int> ParseInput();
 
@@ -12,44 +12,42 @@ int main()
 {
     bool gameOver=false;
 
-    // system("clear");
+    system("clear");
     srand(time(0));
     MinesBoard Board;
     Board.SetBoard();
     Draw(Board);
-    theDraw(Board);
     while(!gameOver){
-    
+        
         std::vector<int> coordinates = ParseInput();
-        if (Board.GetShownTile(coordinates.at(1) - 1, coordinates.at(0))=='*'){
-            Board.Dig(coordinates.at(1) - 1, coordinates.at(0));
-            theDraw(Board);
+        if (Board.GetShownTile(coordinates.at(1) - 1, coordinates.at(0)) == '*' || Board.GetShownTile(coordinates.at(1) - 1, coordinates.at(0)) == 'F')
+        {
+            // system("clear");
+            Board.ChooseAction(coordinates.at(1) - 1, coordinates.at(0));
+            Draw(Board);
         }
         else{
             std::cout << "Błędne współrzędne! Wybrane pole jest już odkryte\n";
         }
 
-        if (Board.GetTile(coordinates.at(1)-1, coordinates.at(0))=='X'){
+        if (Board.IsGameLost()){
             gameOver = true;
             std::cout<<"Game over\n";
-            Draw(Board);
+            Uncover(Board);
         }
         if(Board.IsGameWon()){
             gameOver = true;
             std::cout << "Wreszcie koniec, gratulacje\n";
-            Draw(Board);
+            Uncover(Board);
         }
         
     }
 
 
-    // Draw(Board);
-    // theDraw(Board);
-    // Board.Dig(2,3,gameOver);
-    // theDraw(Board);
+
 }
 
-void Draw(MinesBoard Board)
+void Uncover(MinesBoard Board)
 {
     std::cout << "    ";
     for (int i = 0; i < COLUMNS + 1; i++)
@@ -75,7 +73,7 @@ void Draw(MinesBoard Board)
     std::cout << '\n';
 }
 
-void theDraw(MinesBoard Board)
+void Draw(MinesBoard Board)
 {
     std::cout << "    ";
     for (int i = 0; i < COLUMNS + 1; i++)
@@ -149,9 +147,11 @@ std::vector<int> ParseInput()
         }
     }
     return coordinates;
-    // std::cout << "cdcd " << y << '\n';
-    // std::cout << x << std::endl;
+
 }
+
+
+
 /* TODO:
 1. implement reading user input
 2. put logic into while loop on bool gameOver
@@ -159,7 +159,7 @@ std::vector<int> ParseInput()
 4. add flavor text
 5. make it so first tile discovered is always '0'
 6. look into text formating, if posible add colors, also if cout cannot format output switch to printf      DONE
-7. Clean up the code (get rid of Draw and theDraw, one is enough)
+7. Clean up the code (get rid of Uncover and Draw, one is enough)
 */
 
 
