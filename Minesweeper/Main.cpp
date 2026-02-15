@@ -17,23 +17,30 @@ int main()
     MinesBoard Board;
     Board.SetBoard();
     Draw(Board);
+    theDraw(Board);
     while(!gameOver){
-        theDraw(Board);
+    
         std::vector<int> coordinates = ParseInput();
-        if (Board.GetShownTile(coordinates.at(1) - 1, coordinates.at(0))=='*')
+        if (Board.GetShownTile(coordinates.at(1) - 1, coordinates.at(0))=='*'){
             Board.Dig(coordinates.at(1) - 1, coordinates.at(0));
+            theDraw(Board);
+        }
         else{
             std::cout << "Błędne współrzędne! Wybrane pole jest już odkryte\n";
-            coordinates = ParseInput();
         }
 
         if (Board.GetTile(coordinates.at(1)-1, coordinates.at(0))=='X'){
             gameOver = true;
             std::cout<<"Game over\n";
+            Draw(Board);
+        }
+        if(Board.IsGameWon()){
+            gameOver = true;
+            std::cout << "Wreszcie koniec, gratulacje\n";
+            Draw(Board);
         }
         
     }
-
 
 
     // Draw(Board);
@@ -112,7 +119,7 @@ std::vector<int> ParseInput()
         // x=(int)xAxis-64;
         x = toupper(coords.at(0)) - 65;
         coordinates[0]=x;
-        if (x < 1 || x > COLUMNS-1)
+        if (x < 0 || x > COLUMNS-1)
         {
             std::cout << "Błędne współrzędne!\n";
             coordinates=ParseInput();

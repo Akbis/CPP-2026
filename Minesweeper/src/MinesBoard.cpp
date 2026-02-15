@@ -209,6 +209,9 @@ void MinesBoard::Dig(int row, int column)
             SetShownTile(row,column,GetTile(row,column));
         }
     }
+    std::cout<<"\n"<<uncovered_tiles<<"\n";
 }
 
-// bool 
+bool MinesBoard::IsGameWon(){
+    return !(ROWS*COLUMNS-uncovered_tiles-number_of_mines);
+}
