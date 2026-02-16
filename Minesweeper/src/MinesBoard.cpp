@@ -19,41 +19,21 @@ void MinesBoard::SetTile(int row, int column, char value){
     tiles[row][column]=value;
 }
 
-char MinesBoard::GetShownTile(int row, int column)
-{
+char MinesBoard::GetShownTile(int row, int column){
     return shownTiles[row][column];
 }
 
-void MinesBoard::SetShownTile(int row, int column, char value)
-{
+void MinesBoard::SetShownTile(int row, int column, char value){
     shownTiles[row][column] = value;
 }
 
-void MinesBoard::SetBoard(){
-    //Setting mines, if entire funcions becomes unreadable move this part to its own function SetMines()
-    std::vector<int> temp_mines(ROWS*COLUMNS);
-    std::iota(temp_mines.begin(),temp_mines.end(),0);
-    std::random_shuffle(temp_mines.begin(),temp_mines.end());
-    for(int i=0;i<number_of_mines;i++)
-    {
-        SetTile(temp_mines[i]/COLUMNS,temp_mines[i]%COLUMNS,'X');
-    }
-
-    //Setting tiles
-    for (int i = 0; i < ROWS; i++)
-    {
-        for (int j = 0; j < COLUMNS; j++)
-        {
-            tiles[i][j] = CountSurroundingMines(i,j);
-        }
-    }
-}
 
 void MinesBoard::SetBoard(int row,int column){
     std::vector<int> temp_mines(ROWS * COLUMNS);
     std::vector<int> surrounding_tiles;
     std::iota(temp_mines.begin(), temp_mines.end(), 0);
 
+    // Filling vector of surrounding tiles
     surrounding_tiles.push_back(COLUMNS * row + column);
     if(row==0){
         surrounding_tiles.push_back(COLUMNS * (row + 1) + column);
@@ -121,16 +101,32 @@ void MinesBoard::SetBoard(int row,int column){
             surrounding_tiles.push_back(COLUMNS * (row + 1) + column - 1);
         }
     }
+    sort(surrounding_tiles.begin(), surrounding_tiles.end(), std::greater<int>());
     for(int v:surrounding_tiles){
-        std::cout<<v<<" ";
+        temp_mines.erase(temp_mines.begin()+v);
     }
-    std::cout<<"\n";
+    std::random_shuffle(temp_mines.begin(), temp_mines.end());
+
+    for (int i = 0; i < number_of_mines; i++)
+    {
+        SetTile(temp_mines[i] / COLUMNS, temp_mines[i] % COLUMNS, 'X');
+    }
+
+    // Setting tiles
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLUMNS; j++)
+        {
+            tiles[i][j] = CountSurroundingMines(i, j);
+        }
+    }
 }
 
 // This one is an abomination, should kill it with fire but it works
 // Possibly could be done with vector of chars filled by functoin Surrounding(), but this implementation would work only for this function
 // Using vector of pointers to tiles probably would be better, maybe will do it in GUI version if it happens
-char MinesBoard::CountSurroundingMines(int row, int column){ // returning char cause mines
+// Couls also remake this same way as SetBoard()
+char MinesBoard::CountSurroundingMines(int row, int column){
     int count = 0;  // will be converted to char ASCII for 0 is 48
     if(tiles[row][column]=='X'){
         return 'X';
@@ -199,8 +195,8 @@ char MinesBoard::CountSurroundingMines(int row, int column){ // returning char c
     return (char)(count+48);
 }
 
-void MinesBoard::Dig(int row, int column)
-{
+// All comments applied to CountSurroundingMines() function also work here
+void MinesBoard::Dig(int row, int column){
 
     if (GetShownTile(row, column) == '*' || GetShownTile(row, column) == 'F')
     {
@@ -298,25 +294,23 @@ bool MinesBoard::IsGameLost(){
     return isGameLost;
 }
 
-
-
-void MinesBoard::ChooseAction(int x, int y)
-{
+void MinesBoard::ChooseAction(int x, int y){
     std::cout << "Wybierz akcję:\n";
     std::cout << "Z - Odkryj pole    X - Oflaguj pole\n";
     std::string input;
     std::getline(std::cin, input);
-    while (input.length() > 1)
+
+    while (input.length() != 1)
     {
         std::cout << "Błędny argument\n";
         std::cout << "Podaj poprawny argument: ";
         std::getline(std::cin, input);
     }
-    char action = toupper(input.at(0));
+    
+    char action = toupper(input.at(0));   
     switch (action)
     {
     case 'Z':
-        // std::cout << action;
         Dig(x, y);
         break;
     case 'X':

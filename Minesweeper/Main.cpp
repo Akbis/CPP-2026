@@ -11,19 +11,24 @@ std::vector<int> ParseInput();
 int main()
 {
     bool gameOver=false;
+    std::vector<int> coordinates;
 
     system("clear");
     srand(time(0));
     MinesBoard Board;
-    Board.SetBoard();
+
+    // First move
     Draw(Board);
-    Board.SetBoard(0,0);
-    Board.SetBoard(5,0);
-    Board.SetBoard(7,7);
-    Board.SetBoard(4, 4);
+    coordinates=ParseInput();
+    Board.SetBoard(coordinates.at(1) - 1, coordinates.at(0));
+    Board.Dig(coordinates.at(1) - 1, coordinates.at(0));
+    system("clear");
+    Draw(Board);
+ 
+    // Every other move
     while(!gameOver){
         
-        std::vector<int> coordinates = ParseInput();
+        coordinates = ParseInput();
         if (Board.GetShownTile(coordinates.at(1) - 1, coordinates.at(0)) == '*' || Board.GetShownTile(coordinates.at(1) - 1, coordinates.at(0)) == 'F')
         {
             Board.ChooseAction(coordinates.at(1) - 1, coordinates.at(0));
@@ -43,17 +48,13 @@ int main()
             gameOver = true;
             std::cout << "Wreszcie koniec, gratulacje\n";
             Uncover(Board);
-        }
-        
+        }   
     }
-
-
-
 }
 
 void Uncover(MinesBoard Board)
 {
-    std::cout << "    ";
+    std::cout << "\n    ";
     for (int i = 0; i < ROWS + 1; i++)
     {
 
@@ -79,7 +80,7 @@ void Uncover(MinesBoard Board)
 
 void Draw(MinesBoard Board)
 {
-    std::cout << "    ";
+    std::cout << "\n    ";
     for (int i = 0; i < ROWS + 1; i++)
     {
 
@@ -106,22 +107,24 @@ void Draw(MinesBoard Board)
 std::vector<int> ParseInput()
 {
     std::string coords;
+    int x, y;
+    std::vector<int> coordinates(2, -1);
     std::cout << "Podaj współrzędne pola: ";
     std::getline(std::cin, coords);
-    int x, y;
-    std::vector<int> coordinates(2,-1);
-    coords.erase(std::remove(coords.begin(), coords.end(), ' '), coords.end());
-    if (coords.length() < 2)
+    
+    coords.erase(std::remove(coords.begin(), coords.end(), ' '), coords.end()); //Usuwanie spacji
+
+    if (coords.length() < 2) // Sprawdzenie minimalnej długości
     {
         std::cout << "Błędne współrzędne!\n";
         coordinates = ParseInput();
     }
     else
     {
-        // x=(int)xAxis-64;
         x = toupper(coords.at(0)) - 65;
         coordinates[0]=x;
-        if (x < 0 || x > COLUMNS-1)
+
+        if (!(x > 0 && x < COLUMNS-1)) // Sprawdzenie czy pierwsza koordynata jest poprawna
         {
             std::cout << "Błędne współrzędne!\n";
             coordinates=ParseInput();
@@ -130,7 +133,7 @@ std::vector<int> ParseInput()
             coords.erase(0, 1);
             try
             {
-                y = std::stoi(coords);
+                y = std::stoi(coords); // std::stoi zinterpretuje przykładowy string 43gew4ff jako 43. Można dodać sprawdzenie ilości znaków przez 1+log10()
                 coordinates[1]=y;
             }
             catch (const std::invalid_argument &e)
@@ -143,7 +146,8 @@ std::vector<int> ParseInput()
                 std::cout << "Błędne współrzędne!\n";
                 coordinates = ParseInput(); 
             }
-            if (y < 1 || y > ROWS )
+
+            if (y < 1 || y > ROWS ) 
             {
                 std::cout << "Błędne współrzędne!\n";
                 coordinates = ParseInput();
@@ -151,19 +155,4 @@ std::vector<int> ParseInput()
         }
     }
     return coordinates;
-
 }
-
-
-
-/* TODO:
-1. implement reading user input                                                                             DONE
-2. put logic into while loop on bool gameOver                                                               DONE            
-3. imake flagging mines possible                                                                            DONE
-4. add flavor text                                                                                          DONE
-5. make it so first tile discovered is always '0'                                                           IN PROGRESS
-6. look into text formating, if posible add colors, also if cout cannot format output switch to printf      DONE
-7. Clean up the code            (delete original SetBoard())                                                IN PROGRESS
-*/
-
-

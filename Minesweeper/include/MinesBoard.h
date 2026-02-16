@@ -9,6 +9,7 @@
 #include<vector>
 #include<algorithm>
 #include<numeric>
+#include<functional>
 
 class MinesBoard{
     int uncovered_tiles=0;
@@ -21,17 +22,16 @@ class MinesBoard{
 
 public:
     MinesBoard();                           // fills the board with '*'
-    void SetBoard();                        // board setup before start
     void SetBoard(int,int);                 // setting the board up with setting starting tile to be '0'
-    char GetTile(int,int);                  // get value of tile at coordinates
-    void SetTile(int, int, char);           // set value of tile at coordinates
-    char GetShownTile(int, int);            // get value of tile at coordinates
-    void SetShownTile(int, int, char);      // set value of tile at coordinates
+    char GetTile(int,int);                  // get value of tile at on logic board
+    void SetTile(int, int, char);           // set value of tile at on logic board
+    char GetShownTile(int, int);            // get value of tile at on visible board 
+    void SetShownTile(int, int, char);      // set value of tile at on visible board
     char CountSurroundingMines(int,int);    // calculates number of mines in 8 surrounding tiles. NOTE: beware of edge cases and corner cases
-    void Dig(int, int);                // discovers tile on if it equals '0' also surrounding tiles
+    void Dig(int, int);                     // discovers tile on if it equals '0' also surrounding tiles
     bool IsGameWon();                       // Checks victory condition
-    bool IsGameLost();
-    void ChooseAction(int x, int y);        // I cant believe I'm doing this
+    bool IsGameLost();                      // Checks defeat condition
+    void ChooseAction(int x, int y);        // allows for choice between diggin and uncovering tiles
 };
 
 /* Two Board Implementation:
