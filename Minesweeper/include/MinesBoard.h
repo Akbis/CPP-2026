@@ -22,6 +22,7 @@ class MinesBoard{
 public:
     MinesBoard();                           // fills the board with '*'
     void SetBoard();                        // board setup before start
+    void SetBoard(int,int);                 // setting the board up with setting starting tile to be '0'
     char GetTile(int,int);                  // get value of tile at coordinates
     void SetTile(int, int, char);           // set value of tile at coordinates
     char GetShownTile(int, int);            // get value of tile at coordinates

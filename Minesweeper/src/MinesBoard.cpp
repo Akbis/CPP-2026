@@ -36,7 +36,7 @@ void MinesBoard::SetBoard(){
     std::random_shuffle(temp_mines.begin(),temp_mines.end());
     for(int i=0;i<number_of_mines;i++)
     {
-        SetTile(temp_mines[i]/ROWS,temp_mines[i]%ROWS,'X');
+        SetTile(temp_mines[i]/COLUMNS,temp_mines[i]%COLUMNS,'X');
     }
 
     //Setting tiles
@@ -47,6 +47,84 @@ void MinesBoard::SetBoard(){
             tiles[i][j] = CountSurroundingMines(i,j);
         }
     }
+}
+
+void MinesBoard::SetBoard(int row,int column){
+    std::vector<int> temp_mines(ROWS * COLUMNS);
+    std::vector<int> surrounding_tiles;
+    std::iota(temp_mines.begin(), temp_mines.end(), 0);
+
+    surrounding_tiles.push_back(COLUMNS * row + column);
+    if(row==0){
+        surrounding_tiles.push_back(COLUMNS * (row + 1) + column);
+        if (column==0)
+        {
+            surrounding_tiles.push_back(COLUMNS * row + column+1);
+            surrounding_tiles.push_back(COLUMNS * (row+1) + column+1);
+        }
+        else if (column==COLUMNS-1)
+        {
+            surrounding_tiles.push_back(COLUMNS * (row + 1) + column-1);
+            surrounding_tiles.push_back(COLUMNS * row + column-1);
+        }
+        else{
+            surrounding_tiles.push_back(COLUMNS * row + column + 1);
+            surrounding_tiles.push_back(COLUMNS * (row + 1) + column + 1);
+            surrounding_tiles.push_back(COLUMNS * (row + 1) + column - 1);
+            surrounding_tiles.push_back(COLUMNS * row + column - 1);
+        }
+        
+        
+    }
+    else if(row==ROWS-1){
+        surrounding_tiles.push_back(COLUMNS * (row - 1) + column);
+        if (column == 0)
+        {
+            surrounding_tiles.push_back(COLUMNS * row + column + 1);
+            surrounding_tiles.push_back(COLUMNS * (row - 1) + column + 1);
+        }
+        else if (column == COLUMNS-1)
+        {
+            surrounding_tiles.push_back(COLUMNS * (row - 1) + column - 1);
+            surrounding_tiles.push_back(COLUMNS * row + column - 1);
+        }
+        else
+        {
+            surrounding_tiles.push_back(COLUMNS * row + column + 1);
+            surrounding_tiles.push_back(COLUMNS * (row - 1) + column + 1);
+            surrounding_tiles.push_back(COLUMNS * (row - 1) + column - 1);
+            surrounding_tiles.push_back(COLUMNS * row + column - 1);
+        }
+    }
+    else{
+        surrounding_tiles.push_back(COLUMNS * (row + 1) + column);
+        surrounding_tiles.push_back(COLUMNS * (row - 1) + column);
+        if (column == 0)
+        {
+            surrounding_tiles.push_back(COLUMNS * row + column + 1);
+            surrounding_tiles.push_back(COLUMNS * (row - 1) + column + 1);
+            surrounding_tiles.push_back(COLUMNS * (row + 1) + column + 1);
+        }
+        else if (column == COLUMNS-1)
+        {
+            surrounding_tiles.push_back(COLUMNS * row + column - 1);
+            surrounding_tiles.push_back(COLUMNS * (row - 1) + column - 1);
+            surrounding_tiles.push_back(COLUMNS * (row + 1) + column - 1);
+        }
+        else
+        {
+            surrounding_tiles.push_back(COLUMNS * row + column + 1);
+            surrounding_tiles.push_back(COLUMNS * (row - 1) + column + 1);
+            surrounding_tiles.push_back(COLUMNS * (row + 1) + column + 1);
+            surrounding_tiles.push_back(COLUMNS * row + column - 1);
+            surrounding_tiles.push_back(COLUMNS * (row - 1) + column - 1);
+            surrounding_tiles.push_back(COLUMNS * (row + 1) + column - 1);
+        }
+    }
+    for(int v:surrounding_tiles){
+        std::cout<<v<<" ";
+    }
+    std::cout<<"\n";
 }
 
 // This one is an abomination, should kill it with fire but it works
