@@ -128,11 +128,10 @@ void MinesBoard::Dig(int row, int column)
     {
         if (GetTile(row, column) == 'X')
         {
-            std::cout << "Mina!\n";
             isGameLost=true;
         }
         else if (GetTile(row, column) == '0') // there goes all the stuff
-        {//this wont work bacause mind two neighboring 0's
+        {
             SetShownTile(row, column, '0');
             uncovered_tiles++;
             if (row > 0 && column > 0 && row < ROWS - 1 && column < COLUMNS - 1)

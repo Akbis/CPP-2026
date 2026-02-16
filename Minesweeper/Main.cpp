@@ -22,8 +22,8 @@ int main()
         std::vector<int> coordinates = ParseInput();
         if (Board.GetShownTile(coordinates.at(1) - 1, coordinates.at(0)) == '*' || Board.GetShownTile(coordinates.at(1) - 1, coordinates.at(0)) == 'F')
         {
-            // system("clear");
             Board.ChooseAction(coordinates.at(1) - 1, coordinates.at(0));
+            system("clear");
             Draw(Board);
         }
         else{
