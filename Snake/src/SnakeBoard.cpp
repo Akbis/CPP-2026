@@ -9,9 +9,9 @@ SnakeBoard::SnakeBoard(){
         }
     }
     board[head.x][head.y] = '@';
-     for (size_t i = 1; i < Tail.size(); i++)
+     for (size_t i = 1; i < tail.size(); i++)
     {
-        board[Tail.at(i).x][Tail.at(i).y] = '0';
+        board[tail.at(i).x][tail.at(i).y] = '0';
     }
 }
 
@@ -24,4 +24,16 @@ void SnakeBoard::Draw(){
         }
         std::cout << "\n";
     }
+}
+
+int SnakeBoard::GetLength(){
+    return tail.size();
+}
+
+Coordinates SnakeBoard::GetHead(){
+    return head;
+}
+
+std::vector<Coordinates> SnakeBoard::GetTail(){
+    return tail;
 }

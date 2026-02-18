@@ -13,7 +13,7 @@ struct Coordinates
 class SnakeBoard{
     char board[WIDTH][HEIGHT];
     Coordinates head={WIDTH/2,HEIGHT/2};
-    std::vector<Coordinates> Tail={{WIDTH/2,HEIGHT/2}};
+    std::vector<Coordinates> tail={{WIDTH/2,HEIGHT/2}};
 
 public:
     SnakeBoard();
