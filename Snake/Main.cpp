@@ -1,9 +1,7 @@
-#define WIDTH 20
-#define HEIGHT 20
-// #include"SnakeBoard.h"
-#include<iostream>
+// #define WIDTH 20
+// #define HEIGHT 20
+#include"SnakeBoard.h"
 #include<curses.h>
-#include<vector>
 
 void Draw(char Board[WIDTH][HEIGHT]);
 void SetUp(char Board[WIDTH][HEIGHT], int xHead, int yHead, std::vector<int> xTail, std::vector<int> yTail);
