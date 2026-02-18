@@ -18,8 +18,8 @@ endif()
 #======================================================================
 set(CMAKE_BUILD_TYPE Debug)
 
-set(CMAKE_CXX_FLAGS_DEBUG_INIT "-Wall -Wextra -pedantic -g")
-set(CMAKE_CXX_FLAGS_RELEASE_INIT "-02 -Wall")
+set(CMAKE_CXX_FLAGS_DEBUG_INIT "-lcurses -Wall -Wextra -pedantic -g")
+set(CMAKE_CXX_FLAGS_RELEASE_INIT "-02 -lcurses -Wall")
 
 #=======================================================================
 # Struktura katalogów projektu
@@ -34,4 +34,4 @@ file(GLOB SOURCES "${SOURCE_DIR}/*.cpp")
 add_executable(${PROJECT_NAME} Main.cpp ${SOURCES})
 
 #=======================================================================
-target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic)
+target_compile_options(${PROJECT_NAME} PRIVATE -lcurses -Wall -Wextra -Wpedantic)
