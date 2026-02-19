@@ -5,21 +5,23 @@
 
 #include<vector>
 #include <iostream>
-struct Coordinates
+#include<time.h>
+struct Point
 {
     int x,y;
 };
 
 class SnakeBoard{
     char board[WIDTH][HEIGHT];
-    Coordinates head={WIDTH/2,HEIGHT/2};
-    std::vector<Coordinates> tail={{WIDTH/2,HEIGHT/2}};
+    Point head={WIDTH/2,HEIGHT/2};
+    Point fruit;
+    std::vector<Point> tail={{WIDTH/2,HEIGHT/2}};
 
 public:
     SnakeBoard();
     void Draw();
     int GetLength();
-    Coordinates GetHead();
-    std::vector<Coordinates> GetTail();
+    Point GetHead();
+    std::vector<Point> GetTail();
 
 };

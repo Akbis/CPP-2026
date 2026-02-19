@@ -2,8 +2,8 @@
 #include<curses.h>
 
 
-    int main()
-{
+int main(){
+    srand(time(0));
 
 }
 
