@@ -6,6 +6,8 @@
 #include<vector>
 #include <iostream>
 #include<time.h>
+#include<algorithm>
+#include<numeric>
 
 enum Direction{RIGHT=1,DOWN,LEFT,UP};
 struct Point
@@ -33,7 +35,7 @@ public:
     void Eat();                     // Logic when location of head == location of fruit
     void Move(Direction);           // Moving head and tail also checking for fruit and board edges
     bool IsGameLost();              // Checks for defeat conditions
-    // void PlaceFruit();             // may or may not be used 
+    void PlaceFruit();             // may or may not be used 
 
 };
 

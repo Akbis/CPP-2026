@@ -5,17 +5,14 @@ bool Point::operator==(Point & pt){
 }
 
 SnakeBoard::SnakeBoard(){
-    Point tmpFruit={rand()%WIDTH,rand()%HEIGHT};
-    while((tmpFruit == head)){
-        tmpFruit = {rand() % WIDTH, rand() % HEIGHT};
-    }
-    fruit=tmpFruit;
+    PlaceFruit();
     SyncBoard();
 }
 
 void SnakeBoard::Draw(){
     for (int i = 0; i < HEIGHT; i++)
-    {
+    {   
+        std::cout<<" ";
         for (int j = 0; j < WIDTH; j++)
         {
             std::cout << board[i][j] << " ";
@@ -78,6 +75,32 @@ void SnakeBoard::Move(Direction dir){
     }
     SyncBoard();
     gameOver=IsGameLost(); //might be moved to main
+}
+
+void SnakeBoard::Eat(){
+
+}
+
+void SnakeBoard::PlaceFruit(){
+    std::vector<int> tiles_vector(WIDTH * HEIGHT);
+    std::iota(tiles_vector.begin(), tiles_vector.end(), 0);
+    std::vector<int> taken_tiles;
+
+    taken_tiles.push_back(head.y * WIDTH + head.x);
+    for (Point v : tail)
+    {
+        taken_tiles.push_back(v.y*WIDTH+v.x);
+    }
+
+    sort(taken_tiles.begin(), taken_tiles.end(), std::greater<int>());
+    for (int v : taken_tiles)
+    {
+        tiles_vector.erase(tiles_vector.begin()+v);
+    }
+
+    std::random_shuffle(tiles_vector.begin(), tiles_vector.end());
+    fruit={(int)tiles_vector[0]%HEIGHT,(int)tiles_vector[0]/WIDTH};
+
 }
 
 bool SnakeBoard::IsGameLost(){
