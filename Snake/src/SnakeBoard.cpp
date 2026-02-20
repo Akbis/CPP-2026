@@ -1,5 +1,6 @@
 #include"SnakeBoard.h"
 
+
 SnakeBoard::SnakeBoard(){
     Point tmpFruit={rand()%WIDTH,rand()%HEIGHT};
     while((tmpFruit.x==head.x && tmpFruit.y==head.y)){
@@ -42,4 +43,24 @@ Point SnakeBoard::GetHead(){
 
 std::vector<Point> SnakeBoard::GetTail(){
     return tail;
+}
+
+void SnakeBoard::Move(Direction dir){
+    for (size_t i = 0; i < tail.size() - 2; i++)
+    {
+        tail.at(i)=tail.at(i+1);
+    }
+    tail.at(tail.size()-1)=head;
+    switch (dir)
+    {
+    case 1:
+        
+        break;
+    case 2:
+        break;
+    case 3:
+        break;
+    case 4:
+        break;
+    }
 }
