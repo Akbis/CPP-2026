@@ -1,25 +1,16 @@
 #include"SnakeBoard.h"
 
+bool Point::operator==(Point & pt){
+    return (x==pt.x && y==pt.y);
+}
 
 SnakeBoard::SnakeBoard(){
     Point tmpFruit={rand()%WIDTH,rand()%HEIGHT};
-    while((tmpFruit.x==head.x && tmpFruit.y==head.y)){
+    while((tmpFruit == head)){
         tmpFruit = {rand() % WIDTH, rand() % HEIGHT};
     }
     fruit=tmpFruit;
-    for (int i = 0; i < HEIGHT; i++)
-    {
-        for (int j = 0; j < WIDTH; j++)
-        {
-            board[i][j] = '*';
-        }
-    }
-    board[head.y][head.x] = '@';
-    board[fruit.y][fruit.x] = 'T';
-    for (size_t i = 1; i < tail.size(); i++)
-    {
-        board[tail.at(i).y][tail.at(i).x] = '0';
-    }
+    SyncBoard();
 }
 
 void SnakeBoard::Draw(){
@@ -46,12 +37,30 @@ std::vector<Point> SnakeBoard::GetTail(){
     return tail;
 }
 
+void SnakeBoard::SyncBoard(){
+    for (int i = 0; i < HEIGHT; i++)
+    {
+        for (int j = 0; j < WIDTH; j++)
+        {
+            board[i][j] = '*';
+        }
+        board[head.y][head.x] = '@';
+        board[fruit.y][fruit.x] = 'T';
+        for (Point v : tail)
+        {
+            board[v.y][v.x] = '0';
+        }
+    }
+}
 void SnakeBoard::Move(Direction dir){
-    // for (size_t i = 0; i < tail.size() - 2; i++)
-    // {
-    //     tail.at(i)=tail.at(i+1);
-    // }
-    // tail.at(tail.size()-1)=head;
+    for (size_t i = 0; i < tail.size(); i++)
+    {
+        if(tail.at(i)==tail.back())
+            tail.back() = head;
+        else
+            tail.at(i) = tail.at(i + 1);
+    }
+
     switch (dir)
     {
     case 1:
@@ -67,5 +76,22 @@ void SnakeBoard::Move(Direction dir){
         head.y-=1;
         break;
     }
-    board[head.y][head.x]='@';
+    SyncBoard();
+    gameOver=IsGameLost(); //might be moved to main
+}
+
+bool SnakeBoard::IsGameLost(){
+    if (head.x == -1 || head.x == WIDTH || head.y == -1 || head.x == HEIGHT)
+    {
+        std::cout<<"out of buonds!\n";
+        return true;
+    }
+    for(Point v : tail){
+        if (v==head)
+        {
+            std::cout<<"Ouroboros\n";
+            return true;
+        }      
+    }
+    return false;
 }

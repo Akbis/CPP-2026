@@ -11,23 +11,30 @@ enum Direction{RIGHT=1,DOWN,LEFT,UP};
 struct Point
 {
     int x,y;
-    // Point& operator=(Point&);
-
+    bool operator==(Point&);
 };
 
 class SnakeBoard{
     char board[WIDTH][HEIGHT];
     Point head={WIDTH/2,HEIGHT/2};
     Point fruit;
-    std::vector<Point> tail={{WIDTH/2,HEIGHT/2}}; // Tail, first element of vector is end of the tail
+    bool gameOver=false;  // set to true when game ends  might be here or in main
+    int lenght=2;
+    std::vector<Point> tail = {{WIDTH / 2 - 1, HEIGHT / 2}}; // Tail, first element of vector is end of the tail
+    // std::vector<Point> tail = {{WIDTH / 2 - 2, HEIGHT / 2}, {WIDTH / 2 - 1, HEIGHT / 2}}; // for testing longer snake
 
 public:
-    SnakeBoard();
-    void Draw();
-    int GetLength();
-    Point GetHead();
-    std::vector<Point> GetTail();
-    void Eat();
-    void Move(Direction);
+    SnakeBoard();                   // Board initialization
+    void Draw();                    // Draws the board
+    int GetLength();                // Returns tail lenght          //maybe useless
+    Point GetHead();                // Returns coordinates of head  //maybe useless
+    std::vector<Point> GetTail();   // Returns tail                 //maybe useless
+    void SyncBoard();               // Updates snake position on the board
+    void Eat();                     // Logic when location of head == location of fruit
+    void Move(Direction);           // Moving head and tail also checking for fruit and board edges
+    bool IsGameLost();              // Checks for defeat conditions
+    // void PlaceFruit();             // may or may not be used 
 
 };
+
+// here snake and the board are in a way completly independent entities, have to remember that changing head or tail doesnt impact the board
