@@ -7,30 +7,31 @@ SnakeBoard::SnakeBoard(){
         tmpFruit = {rand() % WIDTH, rand() % HEIGHT};
     }
     fruit=tmpFruit;
-    for (int i = 0; i < WIDTH; i++)
+    for (int i = 0; i < HEIGHT; i++)
     {
-        for (int j = 0; j < HEIGHT; j++)
+        for (int j = 0; j < WIDTH; j++)
         {
             board[i][j] = '*';
         }
     }
-    board[head.x][head.y] = '@';
-    board[fruit.x][fruit.y] = 'T';
+    board[head.y][head.x] = '@';
+    board[fruit.y][fruit.x] = 'T';
     for (size_t i = 1; i < tail.size(); i++)
     {
-        board[tail.at(i).x][tail.at(i).y] = '0';
+        board[tail.at(i).y][tail.at(i).x] = '0';
     }
 }
 
 void SnakeBoard::Draw(){
-    for (int i = 0; i < WIDTH; i++)
+    for (int i = 0; i < HEIGHT; i++)
     {
-        for (int j = 0; j < HEIGHT; j++)
+        for (int j = 0; j < WIDTH; j++)
         {
             std::cout << board[i][j] << " ";
         }
         std::cout << "\n";
     }
+    std::cout << "\n";
 }
 
 int SnakeBoard::GetLength(){
@@ -46,21 +47,25 @@ std::vector<Point> SnakeBoard::GetTail(){
 }
 
 void SnakeBoard::Move(Direction dir){
-    for (size_t i = 0; i < tail.size() - 2; i++)
-    {
-        tail.at(i)=tail.at(i+1);
-    }
-    tail.at(tail.size()-1)=head;
+    // for (size_t i = 0; i < tail.size() - 2; i++)
+    // {
+    //     tail.at(i)=tail.at(i+1);
+    // }
+    // tail.at(tail.size()-1)=head;
     switch (dir)
     {
     case 1:
-        
+        head.x-=1;        
         break;
     case 2:
+        head.y+=1;
         break;
     case 3:
+        head.x+=1;
         break;
     case 4:
+        head.y-=1;
         break;
     }
+    board[head.y][head.x]='@';
 }
