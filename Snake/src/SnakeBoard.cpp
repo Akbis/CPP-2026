@@ -50,36 +50,44 @@ void SnakeBoard::SyncBoard(){
     }
 }
 void SnakeBoard::Move(Direction dir){
-    Point curHead=head;
-    switch (dir)
-    {
-    case 1:
-        head.x += 1;
-        break;
-    case 2:
-        head.y += 1;
-        break;
-    case 3:
-        head.x -= 1;
-        break;
-    case 4:
-        head.y -= 1;
-        break;
+    if(dir!=OppositeDirection(defaultDirection)){
+        Point curHead=head;
+        switch (dir)
+        {
+        case 1:
+            head.x += 1;
+            defaultDirection=RIGHT;
+            break;
+        case 2:
+            head.y += 1;
+            defaultDirection = DOWN;
+            break;
+        case 3:
+            head.x -= 1;
+            defaultDirection = LEFT;
+            break;
+        case 4:
+            head.y -= 1;
+            defaultDirection = UP;
+            break;
+        }
+        if(head==fruit){
+            PlaceFruit();
+            tail.push_back(curHead);
+        }
+        else{
+        for (size_t i = 0; i < tail.size(); i++)
+           {
+               if(tail.at(i)==tail.back())
+                   tail.back() = curHead;
+               else
+                   tail.at(i) = tail.at(i + 1);
+           }
+        }
+        SyncBoard();
     }
-    if(head==fruit){
-        PlaceFruit();
-        tail.push_back(curHead);
-    }
-    else{
-    for (size_t i = 0; i < tail.size(); i++)
-       {
-           if(tail.at(i)==tail.back())
-               tail.back() = curHead;
-           else
-               tail.at(i) = tail.at(i + 1);
-       }
-    }
-    SyncBoard();
+    else
+        Move(defaultDirection);
 }
 
 void SnakeBoard::Eat(){
@@ -111,7 +119,7 @@ void SnakeBoard::PlaceFruit(){
 bool SnakeBoard::IsGameLost(){
     if (head.x == -1 || head.x == WIDTH || head.y == -1 || head.x == HEIGHT)
     {
-        std::cout<<"out of buonds!\n";
+        std::cout<<"out of bounds!\n";
         return true;
     }
     for(Point v : tail){
@@ -122,4 +130,30 @@ bool SnakeBoard::IsGameLost(){
         }      
     }
     return false;
+}
+
+Direction SnakeBoard::GetDefaultDirection(){
+    return defaultDirection;
+}
+
+Direction OppositeDirection(Direction dir)
+{
+    switch (dir)
+    {
+    case 1:
+        return LEFT;
+        break;
+    case 2:
+        return UP;
+        break;
+    case 3:
+        return RIGHT;
+        break;
+    case 4:
+        return DOWN;
+        break;
+    default:
+        return LEFT;
+        break;
+    }
 }

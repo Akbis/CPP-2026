@@ -1,24 +1,24 @@
 #include"SnakeBoard.h"
 #include<curses.h>
 
-Direction Input(int input){
+Direction Input(char input, SnakeBoard board){
     Direction dir;
     switch (input)
     {
-    case 1:
+    case 'd':
         dir=RIGHT;
         break;
-    case 2:
+    case 'w':
         dir=UP;
         break;
-    case 3:
+    case 'a':
         dir=LEFT;
         break;
-    case 4:
+    case 's':
         dir=DOWN;
         break;
-    
     default:
+        dir=board.GetDefaultDirection();
         break;
 
     }
@@ -30,13 +30,13 @@ int main(){
     system("clear");
     srand(time(0));
     SnakeBoard board;
-    int intput; 
+    char intput; 
     board.Draw();
     while(!gameOver){
         system("clear");
         board.Draw();
         std::cin>>intput;
-        board.Move(Input(intput));
+        board.Move(Input(intput, board));
         gameOver = board.IsGameLost();
         
         
