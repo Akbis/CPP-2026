@@ -20,10 +20,8 @@ class SnakeBoard{
     char board[WIDTH][HEIGHT];
     Point head={WIDTH/2,HEIGHT/2};
     Point fruit;
-    bool gameOver=false;  // set to true when game ends  might be here or in main
-    int lenght=2;
+    int lenght=2;   // probably useless, though might rename it to score
     std::vector<Point> tail = {{WIDTH / 2 - 1, HEIGHT / 2}}; // Tail, first element of vector is end of the tail
-    // std::vector<Point> tail = {{WIDTH / 2 - 2, HEIGHT / 2}, {WIDTH / 2 - 1, HEIGHT / 2}}; // for testing longer snake
 
 public:
     SnakeBoard();                   // Board initialization
@@ -40,3 +38,5 @@ public:
 };
 
 // here snake and the board are in a way completly independent entities, have to remember that changing head or tail doesnt impact the board
+
+// Will have to add tracking of current direction to prevent 180 turns

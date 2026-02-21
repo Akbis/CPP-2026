@@ -50,31 +50,36 @@ void SnakeBoard::SyncBoard(){
     }
 }
 void SnakeBoard::Move(Direction dir){
-    for (size_t i = 0; i < tail.size(); i++)
-    {
-        if(tail.at(i)==tail.back())
-            tail.back() = head;
-        else
-            tail.at(i) = tail.at(i + 1);
-    }
-
+    Point curHead=head;
     switch (dir)
     {
     case 1:
-        head.x-=1;        
+        head.x += 1;
         break;
     case 2:
-        head.y+=1;
+        head.y += 1;
         break;
     case 3:
-        head.x+=1;
+        head.x -= 1;
         break;
     case 4:
-        head.y-=1;
+        head.y -= 1;
         break;
     }
+    if(head==fruit){
+        PlaceFruit();
+        tail.push_back(curHead);
+    }
+    else{
+    for (size_t i = 0; i < tail.size(); i++)
+       {
+           if(tail.at(i)==tail.back())
+               tail.back() = curHead;
+           else
+               tail.at(i) = tail.at(i + 1);
+       }
+    }
     SyncBoard();
-    gameOver=IsGameLost(); //might be moved to main
 }
 
 void SnakeBoard::Eat(){
