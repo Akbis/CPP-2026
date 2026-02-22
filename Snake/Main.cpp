@@ -1,43 +1,53 @@
-#define WIDTH 20
-#define HEIGHT 20
-// #include"SnakeBoard.h"
-#include<iostream>
+#include"SnakeBoard.h"
 #include<curses.h>
-#include<vector>
 
-void Draw(char Board[WIDTH][HEIGHT]);
-void SetUp(char Board[WIDTH][HEIGHT], int xHead, int yHead, std::vector<int> xTail, std::vector<int> yTail);
-
-    int main()
-{
-    char Board[WIDTH][HEIGHT];
-    int xHead=WIDTH/2, yHead=HEIGHT/2;
-    std::vector<int> xTail={xHead},yTail={yHead};
-    SetUp(Board, xHead, yHead, xTail, yTail);
-    Draw(Board);
-}
-
-void Draw(char Board[WIDTH][HEIGHT]){
-    for(int i=0;i<WIDTH;i++){
-        for (int j= 0; j < HEIGHT; j++)
-        {
-            std::cout<<Board[i][j]<<" ";
-        }       
-        std::cout<<"\n";
-    }
-}
-
-void SetUp(char Board[WIDTH][HEIGHT], int xHead, int yHead, std::vector<int> xTail, std::vector<int> yTail)
-{
-    for (int i = 0; i < WIDTH; i++)
+Direction Input(char input, SnakeBoard board){
+    Direction dir;
+    switch (input)
     {
-        for (int j = 0; j < HEIGHT; j++)
-        {
-            Board[i][j]='*';
-        }
+    case 'd':
+        dir=RIGHT;
+        break;
+    case 'w':
+        dir=UP;
+        break;
+    case 'a':
+        dir=LEFT;
+        break;
+    case 's':
+        dir=DOWN;
+        break;
+    default:
+        dir=board.GetDefaultDirection();
+        break;
+
     }
-    Board[xHead][yHead]='@';
-    for(size_t i=1;i<xTail.size();i++){
-        Board[xTail.at(i)][yTail.at(i)]='0';
-    }
+    return dir;
 }
+
+int main(){
+    bool gameOver=false;
+    system("clear");
+    srand(time(0));
+    SnakeBoard board;
+    char intput; 
+    board.Draw();
+    while(!gameOver){
+        system("clear");
+        board.Draw();
+        std::cin>>intput;
+        board.Move(Input(intput, board));
+        gameOver = board.IsGameLost();
+        
+        
+
+    }
+    // board.Move(UP);
+    // board.Move(UP);
+    // board.Draw();
+    // board.Move(LEFT);
+    // board.Draw();
+
+}
+
+
