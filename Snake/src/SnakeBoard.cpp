@@ -157,3 +157,7 @@ Direction OppositeDirection(Direction dir)
         break;
     }
 }
+
+char SnakeBoard::GetTile(int y,int x){
+    return board[y][x];
+}

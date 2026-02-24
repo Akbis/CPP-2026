@@ -5,6 +5,8 @@ project(Snake LANGUAGES CXX)
 set(CMAKE_CXX STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+find_package(Curses REQUIRED)
+include_directories(${CURSES_INCLUDE_DIR})
 #=======================================================================
 set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
 set(CMAKE_DISABLE_SOURCE_CHANGES ON)
@@ -17,8 +19,8 @@ endif()
 #======================================================================
 set(CMAKE_BUILD_TYPE Debug)
 
-set(CMAKE_CXX_FLAGS_DEBUG_INIT "-lcurses -Wall -Wextra -pedantic -g")
-set(CMAKE_CXX_FLAGS_RELEASE_INIT "-02 -lcurses -Wall")
+set(CMAKE_CXX_FLAGS_DEBUG_INIT "-lncurses -Wall -Wextra -pedantic -g")
+set(CMAKE_CXX_FLAGS_RELEASE_INIT "-02 -lncurses -Wall")
 
 #=======================================================================
 # Struktura katalogów projektu
@@ -32,5 +34,6 @@ file(GLOB SOURCES "${SOURCE_DIR}/*.cpp")
 #=======================================================================
 add_executable(${PROJECT_NAME} Main.cpp ${SOURCES})
 
+target_link_libraries(Snake ${CURSES_LIBRARIES})
 #=======================================================================
-target_compile_options(${PROJECT_NAME} PRIVATE -lcurses -Wall -Wextra -Wpedantic)
+target_compile_options(${PROJECT_NAME} PRIVATE -lncurses -Wall -Wextra -Wpedantic)
