@@ -65,8 +65,8 @@ void SnakeBoard::Move(Direction dir){
             break;
         }
         if(head==fruit){
-            PlaceFruit();
             tail.push_back(curHead);
+            PlaceFruit();
         }
         else{
         for (size_t i = 0; i < tail.size(); i++)
