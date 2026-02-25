@@ -1,7 +1,7 @@
 #pragma once
 
-#define WIDTH 20
-#define HEIGHT 20
+#define WIDTH 4
+#define HEIGHT 4
 
 #include<vector>
 #include <iostream>
@@ -17,25 +17,21 @@ struct Point
 };
 
 class SnakeBoard{
-    char board[WIDTH][HEIGHT];
+    char board[WIDTH][HEIGHT+1];
     Point head={WIDTH/2,HEIGHT/2};
     Point fruit;
-    int lenght=2;   // probably useless, though might rename it to score
-    std::vector<Point> tail = {{WIDTH / 2 - 1, HEIGHT / 2},{WIDTH/2 -2, HEIGHT/2}}; // Tail, first element of vector is end of the tail
+    std::vector<Point> tail = {{WIDTH / 2 - 1, HEIGHT / 2}}; // Tail, first element of vector is end of the tail
     Direction defaultDirection=RIGHT;
 
 public:
-    SnakeBoard();                   // Board initialization
-    void Draw();                    // Draws the board
-    int GetLength();                // Returns tail lenght          //maybe useless
-    Point GetHead();                // Returns coordinates of head  //maybe useless
-    std::vector<Point> GetTail();   // Returns tail                 //maybe useless
-    void SyncBoard();               // Updates snake position on the board
-    void Eat();                     // Logic when location of head == location of fruit
-    void Move(Direction);           // Moving head and tail also checking for fruit and board edges
-    bool IsGameLost();              // Checks for defeat conditions
-    void PlaceFruit();              // may or may not be used 
-    Direction GetDefaultDirection();     // current direction of movement used when no input 
+    SnakeBoard();                       // Board initialization
+    void Draw();                        // Draws the board
+    int Score();                        // Returns score
+    void SyncBoard();                   // Updates snake position on the board
+    void Move(Direction);               // Moving head and tail also checking for fruit and board edges
+    bool IsGameLost();                  // Checks for defeat conditions
+    void PlaceFruit();                  // may or may not be used 
+    Direction GetDefaultDirection();    // current direction of movement used when no input 
 
     char GetTile(int,int);
 

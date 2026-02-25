@@ -1,30 +1,6 @@
 #include"SnakeBoard.h"
 #include<ncurses.h>
 
-Direction Input(char input, SnakeBoard board){
-    Direction dir;
-    switch (input)
-    {
-    case 'd':
-        dir=RIGHT;
-        break;
-    case 'w':
-        dir=UP;
-        break;
-    case 'a':
-        dir=LEFT;
-        break;
-    case 's':
-        dir=DOWN;
-        break;
-    default:
-        dir = board.GetDefaultDirection();
-        break;
-
-    }
-    return dir;
-}
-
 Direction NcurInput(int input,SnakeBoard board){
     Direction dir;
     switch (input)
@@ -49,6 +25,7 @@ Direction NcurInput(int input,SnakeBoard board){
         dir = board.GetDefaultDirection();
         break;
     }
+    return dir;
 }
 void NcurDraw(SnakeBoard board,WINDOW* win){
     for(int i=0;i<HEIGHT;i++){
@@ -58,15 +35,16 @@ void NcurDraw(SnakeBoard board,WINDOW* win){
         }
         
     }
+    mvprintw(27, 25, "Score:");
+    mvprintw(27, 53, "%d", board.Score());  
     wrefresh(win);
-
 }
 
 int main(){
     system("resize -s 35 80");  // resize terminal
     bool gameOver=false;
     int input;
-    // system("clear");
+    system("clear");
     srand(time(0));
     SnakeBoard board;
     // char intput; 
@@ -87,16 +65,32 @@ int main(){
     noecho();
     curs_set(0);
     keypad(stdscr,true);
-    // printw("Hello world");
-
-    WINDOW *win=newwin(22,43,5,19);
+    WINDOW *win=newwin(HEIGHT+2,2*WIDTH+3,5,19);
     refresh();
     box(win,0,0);
 
     wrefresh(win);
-    mvprintw(27, 25, "Score:");
-    // mvprintw(27,53,"%d", score);  // use when scoring implemented
-    NcurDraw(board,win);
+    // mvprintw(27, 25, "Score:");
+    // mvprintw(27,53,"%d", board.Score());
+    // NcurDraw(board,win);
+    while (!gameOver)
+    {
+        NcurDraw(board, win);
+        input=getch();
+        board.Move(NcurInput(input,board));
+        if(board.IsGameLost()){
+            gameOver=true;
+            mvprintw(3,37,"Game Over");
+            getch();
+        }
+        if(board.Score()==WIDTH*HEIGHT-2){
+            gameOver=true;
+            mvprintw(3, 37, "Wreszcie koniec");
+ \
+            getch();
+        }
+    }
+    
 
 
     getch();

@@ -22,17 +22,10 @@ void SnakeBoard::Draw(){
     std::cout << "\n";
 }
 
-int SnakeBoard::GetLength(){
-    return tail.size();
+int SnakeBoard::Score(){
+    return tail.size()-1;
 }
 
-Point SnakeBoard::GetHead(){
-    return head;
-}
-
-std::vector<Point> SnakeBoard::GetTail(){
-    return tail;
-}
 
 void SnakeBoard::SyncBoard(){
     for (int i = 0; i < HEIGHT; i++)
@@ -90,9 +83,6 @@ void SnakeBoard::Move(Direction dir){
         Move(defaultDirection);
 }
 
-void SnakeBoard::Eat(){
-
-}
 
 void SnakeBoard::PlaceFruit(){
     std::vector<int> tiles_vector(WIDTH * HEIGHT);
@@ -117,15 +107,13 @@ void SnakeBoard::PlaceFruit(){
 }
 
 bool SnakeBoard::IsGameLost(){
-    if (head.x == -1 || head.x == WIDTH || head.y == -1 || head.x == HEIGHT)
+    if (head.x == -1 || head.x == WIDTH || head.y == -1 || head.y == HEIGHT)
     {
-        std::cout<<"out of bounds!\n";
         return true;
     }
     for(Point v : tail){
         if (v==head)
         {
-            std::cout<<"Ouroboros\n";
             return true;
         }      
     }
