@@ -1,7 +1,7 @@
 #pragma once
 
-#define WIDTH 20
-#define HEIGHT 20
+#define WIDTH 5
+#define HEIGHT 5
 
 #include<vector>
 #include <iostream>

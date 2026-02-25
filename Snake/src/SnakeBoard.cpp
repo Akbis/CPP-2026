@@ -72,8 +72,9 @@ void SnakeBoard::Move(Direction dir){
             break;
         }
         if(head==fruit){
-            PlaceFruit();
             tail.push_back(curHead);
+            PlaceFruit();
+            
         }
         else{
         for (size_t i = 0; i < tail.size(); i++)
@@ -88,6 +89,8 @@ void SnakeBoard::Move(Direction dir){
     }
     else
         Move(defaultDirection);
+
+
 }
 
 void SnakeBoard::Eat(){
@@ -105,15 +108,17 @@ void SnakeBoard::PlaceFruit(){
         taken_tiles.push_back(v.y*WIDTH+v.x);
     }
 
+
     sort(taken_tiles.begin(), taken_tiles.end(), std::greater<int>());
+
     for (int v : taken_tiles)
     {
         tiles_vector.erase(tiles_vector.begin()+v);
     }
 
     std::random_shuffle(tiles_vector.begin(), tiles_vector.end());
-    fruit={(int)tiles_vector[0]%HEIGHT,(int)tiles_vector[0]/WIDTH};
 
+    fruit = {(int)tiles_vector[0] % HEIGHT, (int)tiles_vector[0] / WIDTH};
 }
 
 bool SnakeBoard::IsGameLost(){
