@@ -21,7 +21,7 @@ class SnakeBoard{
     Point head={WIDTH/2,HEIGHT/2};
     Point fruit;
     int lenght=2;   // probably useless, though might rename it to score
-    std::vector<Point> tail = {{WIDTH / 2 - 1, HEIGHT / 2}}; // Tail, first element of vector is end of the tail
+    std::vector<Point> tail = {{WIDTH / 2 - 1, HEIGHT / 2},{WIDTH/2 -2, HEIGHT/2}}; // Tail, first element of vector is end of the tail
     Direction defaultDirection=RIGHT;
 
 public:

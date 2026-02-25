@@ -39,7 +39,7 @@ void SnakeBoard::SyncBoard(){
     {
         for (int j = 0; j < WIDTH; j++)
         {
-            board[i][j] = '*';
+            board[i][j] = ' ';  // not sure if it should be ' ' or '*'
         }
         board[head.y][head.x] = '@';
         board[fruit.y][fruit.x] = 'T';

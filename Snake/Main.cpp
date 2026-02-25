@@ -28,7 +28,7 @@ void NcurDraw(SnakeBoard board,WINDOW* win){
     for(int i=0;i<HEIGHT;i++){
         for (int j = 0; j<WIDTH; j++)
         {
-            mvwprintw(win, i + 1, 2 * j + 2, "%c", board.GetTile(j,i));
+            mvwprintw(win, i + 1, 2 * j + 2, "%c", board.GetTile(i,j));
         }
         
     }
@@ -37,6 +37,7 @@ void NcurDraw(SnakeBoard board,WINDOW* win){
 }
 
 int main(){
+    system("resize -s 35 80");  // resize terminal
     // bool gameOver=false;
     // system("clear");
     srand(time(0));
@@ -60,7 +61,7 @@ int main(){
     curs_set(0);
     // printw("Hello world");
 
-    WINDOW *win=newwin(22,43,5,5);
+    WINDOW *win=newwin(22,43,5,19);
     refresh();
     box(win,0,0);
     // for (int i = 0; i < HEIGHT; i++)
@@ -70,7 +71,9 @@ int main(){
     //         mvwprintw(win, i + 1, 2 * j + 2, "%c", board.GetTile(j, i));
     //     }
     // }
-    // wrefresh(win);
+    wrefresh(win);
+    mvprintw(27, 25, "Score:");
+    // mvprintw(27,53,"%d", score);  // use when scoring implemented
     NcurDraw(board,win);
 
     getch();
