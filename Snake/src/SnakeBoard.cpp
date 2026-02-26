@@ -9,19 +9,6 @@ SnakeBoard::SnakeBoard(){
     SyncBoard();
 }
 
-void SnakeBoard::Draw(){
-    for (int i = 0; i < HEIGHT; i++)
-    {   
-        std::cout<<" ";
-        for (int j = 0; j < WIDTH; j++)
-        {
-            std::cout << board[i][j] << " ";
-        }
-        std::cout << "\n";
-    }
-    std::cout << "\n";
-}
-
 int SnakeBoard::Score(){
     return tail.size()-1;
 }
@@ -85,7 +72,7 @@ void SnakeBoard::Move(Direction dir){
 
 
 void SnakeBoard::PlaceFruit(){
-    std::vector<int> tiles_vector(WIDTH * HEIGHT);
+    std::vector<int> tiles_vector(WIDTH * HEIGHT); // same method as in Minesweeper
     std::iota(tiles_vector.begin(), tiles_vector.end(), 0);
     std::vector<int> taken_tiles;
 

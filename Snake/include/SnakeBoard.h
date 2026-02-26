@@ -1,7 +1,7 @@
 #pragma once
 
-#define WIDTH 4
-#define HEIGHT 4
+#define WIDTH 20
+#define HEIGHT 20
 
 #include<vector>
 #include <iostream>
@@ -20,12 +20,11 @@ class SnakeBoard{
     char board[WIDTH][HEIGHT+1];
     Point head={WIDTH/2,HEIGHT/2};
     Point fruit;
-    std::vector<Point> tail = {{WIDTH / 2 - 1, HEIGHT / 2}}; // Tail, first element of vector is end of the tail
+    std::vector<Point> tail = {{WIDTH / 2 - 1, HEIGHT / 2}, {WIDTH / 2 - 2, HEIGHT / 2}}; // Tail, first element of vector is end of the tail
     Direction defaultDirection=RIGHT;
 
 public:
     SnakeBoard();                       // Board initialization
-    void Draw();                        // Draws the board
     int Score();                        // Returns score
     void SyncBoard();                   // Updates snake position on the board
     void Move(Direction);               // Moving head and tail also checking for fruit and board edges

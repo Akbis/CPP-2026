@@ -47,37 +47,23 @@ int main(){
     system("clear");
     srand(time(0));
     SnakeBoard board;
-    // char intput; 
-    // board.Draw();
-    // while(!gameOver){
-    //     system("clear");
-    //     board.Draw();
-    //     std::cin>>intput;
-    //     board.Move(Input(intput, board));
-    //     gameOver = board.IsGameLost();
-    // }
-    // board.Move(UP);
-    // board.Move(UP);
-    // board.Draw();
-    // board.Move(LEFT);
-    // board.Draw();
+
     initscr();
-    noecho();
-    curs_set(0);
-    keypad(stdscr,true);
+    noecho();           // don't display getch()
+    curs_set(0);        // don't display cursor
+    keypad(stdscr,true);// allow inputing special keys
+
     WINDOW *win=newwin(HEIGHT+2,2*WIDTH+3,5,19);
     refresh();
     box(win,0,0);
-
     wrefresh(win);
-    // mvprintw(27, 25, "Score:");
-    // mvprintw(27,53,"%d", board.Score());
-    // NcurDraw(board,win);
+
     while (!gameOver)
     {
         NcurDraw(board, win);
         input=getch();
         board.Move(NcurInput(input,board));
+        
         if(board.IsGameLost()){
             gameOver=true;
             mvprintw(3,37,"Game Over");
@@ -86,7 +72,6 @@ int main(){
         if(board.Score()==WIDTH*HEIGHT-2){
             gameOver=true;
             mvprintw(3, 37, "Wreszcie koniec");
- \
             getch();
         }
     }
