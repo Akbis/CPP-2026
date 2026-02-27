@@ -49,12 +49,19 @@ int main(){
     SnakeBoard board;
 
     initscr();
-    noecho();           // don't display getch()
-    curs_set(0);        // don't display cursor
-    keypad(stdscr,true);// allow inputing special keys
+    // cbreak();
+
+    // as long as there are no detected errors this solves timeout problem
+    // halfdelay(2);   // more or less same as below only in tenths of a seconds and negatives not allowed  
+        timeout(135);      // when theres no input for n miliseconds of a second it throws ERR which is equal -1,
+    //can be verified by adding case -1: to NCurInput()  
+
+    noecho();               // don't display getch()
+    curs_set(0);            // don't display cursor
+    keypad(stdscr,true);    // allow inputing special keys
+    set_escdelay(0);        // without this ESC causes delays 
 
     WINDOW *win=newwin(HEIGHT+2,2*WIDTH+3,5,19);
-    // wtimeout(win,1000);
     refresh();
     box(win,0,0);
     wrefresh(win);
@@ -76,8 +83,7 @@ int main(){
             getch();
         }
     }
-    
-
+    timeout(-1);    // overrites timeout so that itwill wait indefinitely for input to close window
 
     getch();
     endwin();
@@ -89,6 +95,7 @@ TODO
 1. Set turn lenght
 2. If time exceeded without input move in default direction
 3. Make it pretty (colors and maybe spacing)
+4. Adjust window and terimnal size to board size
 
 ISSUES
 1. either fix first move tail issue or reduce starting size, adjust scoring to chosen solution

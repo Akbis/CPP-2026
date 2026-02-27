@@ -4,7 +4,6 @@
 #define HEIGHT 20
 
 #include<vector>
-#include <iostream>
 #include<time.h>
 #include<algorithm>
 #include<numeric>
