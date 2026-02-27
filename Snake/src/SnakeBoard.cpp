@@ -15,17 +15,17 @@ int SnakeBoard::Score(){
 
 
 void SnakeBoard::SyncBoard(){
-    for (int i = 0; i < HEIGHT; i++)
+    for (int i = 0; i < HEIGHT+1; i++)
     {
         for (int j = 0; j < WIDTH; j++)
         {
-            board[i][j] = ' ';  // not sure if it should be ' ' or '*'
+            board[i+1][j] = ' ';  // not sure if it should be ' ' or '*'
         }
-        board[head.y][head.x] = '@';
-        board[fruit.y][fruit.x] = 'T';
+        board[head.y+1][head.x] = '@';
+        board[fruit.y+1][fruit.x] = 'T';
         for (Point v : tail)
         {
-            board[v.y][v.x] = '0';
+            board[v.y+1][v.x] = '0';
         }
     }
 }
@@ -134,5 +134,5 @@ Direction OppositeDirection(Direction dir)
 }
 
 char SnakeBoard::GetTile(int y,int x){
-    return board[y][x];
+    return board[y+1][x];
 }

@@ -54,6 +54,7 @@ int main(){
     keypad(stdscr,true);// allow inputing special keys
 
     WINDOW *win=newwin(HEIGHT+2,2*WIDTH+3,5,19);
+    // wtimeout(win,1000);
     refresh();
     box(win,0,0);
     wrefresh(win);
@@ -83,3 +84,15 @@ int main(){
 }
 
 
+/* 
+TODO
+1. Set turn lenght
+2. If time exceeded without input move in default direction
+3. Make it pretty (colors and maybe spacing)
+
+ISSUES
+1. either fix first move tail issue or reduce starting size, adjust scoring to chosen solution
+2. look into better solution to hiting edges beyond allocated tiles than two virtual lines
+
+
+*/
