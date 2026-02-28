@@ -31,7 +31,18 @@ void NcurDraw(SnakeBoard board,WINDOW* win){
     for(int i=0;i<HEIGHT;i++){
         for (int j = 0; j<WIDTH; j++)
         {
-            mvwprintw(win, i + 1, 2 * j + 2, "%c", board.GetTile(i,j));
+            if (board.GetTile(i, j) == '0' || board.GetTile(i, j) == '@'){
+                wattron(win,COLOR_PAIR(1));
+                mvwprintw(win, i + 1, 2 * j + 2, "%c", board.GetTile(i, j));
+                wattroff(win,COLOR_PAIR(1));
+            }
+            else if (board.GetTile(i, j) == 'T'){
+                wattron(win, COLOR_PAIR(2));
+                mvwprintw(win, i + 1, 2 * j + 2, "%c", board.GetTile(i, j));
+                wattroff(win,COLOR_PAIR(2));
+            }
+            else
+                mvwprintw(win, i + 1, 2 * j + 2, "%c", board.GetTile(i, j));
         }
         
     }
@@ -41,30 +52,40 @@ void NcurDraw(SnakeBoard board,WINDOW* win){
 }
 
 int main(){
-    system("resize -s 35 80");  // resize terminal
-    bool gameOver=false;
+    bool gameOver = false;
     int input;
+    SnakeBoard board;
+    
+    system("resize -s 35 80");  // resize terminal
     system("clear");
     srand(time(0));
-    SnakeBoard board;
 
     initscr();
-    // cbreak();
-
-    // as long as there are no detected errors this solves timeout problem
-    // halfdelay(2);   // more or less same as below only in tenths of a seconds and negatives not allowed  
-        timeout(135);      // when theres no input for n miliseconds of a second it throws ERR which is equal -1,
-    //can be verified by adding case -1: to NCurInput()  
-
     noecho();               // don't display getch()
     curs_set(0);            // don't display cursor
     keypad(stdscr,true);    // allow inputing special keys
-    set_escdelay(0);        // without this ESC causes delays 
+    set_escdelay(0);        // without this ESC causes delays
+
+    // as long as there are no detected errors this solves timeout problem
+    // halfdelay(2);   // more or less same as below only in tenths of a seconds and negatives not allowed
+    timeout(13500); // when theres no input for n miliseconds of a second it throws ERR which is equal -1,
+    // can be verified by adding case -1: to NCurInput()
+
+    // Colors
+    start_color();
+    init_pair(1, COLOR_BLUE, COLOR_BLACK); //Use if background color setting failed
+    init_pair(2, COLOR_RED, COLOR_BLACK);
+    // init_pair(1,COLOR_BLUE,COLOR_GREEN);
+    // init_pair(2, COLOR_RED, COLOR_GREEN);
+    init_pair(3, COLOR_RED, COLOR_GREEN);
 
     WINDOW *win=newwin(HEIGHT+2,2*WIDTH+3,5,19);
     refresh();
     box(win,0,0);
     wrefresh(win);
+    // wattron(win,COLOR_PAIR(1));
+    // wbkgd(win,COLOR_PAIR(1));
+    // wbkgd(win, COLOR_PAIR(3));
 
     while (!gameOver)
     {
@@ -92,13 +113,13 @@ int main(){
 
 /* 
 TODO
-1. Set turn lenght
-2. If time exceeded without input move in default direction
+1. Set turn lenght                                                      DONE
+2. If time exceeded without input move in default direction             DONE
 3. Make it pretty (colors and maybe spacing)
 4. Adjust window and terimnal size to board size
 
 ISSUES
-1. either fix first move tail issue or reduce starting size, adjust scoring to chosen solution
+1. either fix first move tail issue or reduce starting size, adjust scoring to chosen solution, no idea why it doesn't work
 2. look into better solution to hiting edges beyond allocated tiles than two virtual lines
 
 

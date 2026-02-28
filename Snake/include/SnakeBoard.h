@@ -19,7 +19,7 @@ class SnakeBoard{
     char board[HEIGHT+2][WIDTH];
     Point head={WIDTH/2,HEIGHT/2};
     Point fruit;
-    std::vector<Point> tail = {{WIDTH / 2 - 1, HEIGHT / 2}, {WIDTH / 2 - 2, HEIGHT / 2}}; // Tail, first element of vector is end of the tail
+    std::vector<Point> tail = {{WIDTH / 2 - 1, HEIGHT / 2}, {WIDTH / 2 - 2, HEIGHT / 2}, {WIDTH / 2 - 3, HEIGHT / 2}}; // Tail, first element of vector is end of the tail
     Direction defaultDirection=RIGHT;
 
 public:

@@ -4,13 +4,35 @@ bool Point::operator==(Point & pt){
     return (x==pt.x && y==pt.y);
 }
 
+Direction OppositeDirection(Direction dir)
+{
+    switch (dir)
+    {
+    case 1:
+        return LEFT;
+        break;
+    case 2:
+        return UP;
+        break;
+    case 3:
+        return RIGHT;
+        break;
+    case 4:
+        return DOWN;
+        break;
+    default:
+        return LEFT;
+        break;
+    }
+}
+
 SnakeBoard::SnakeBoard(){
     PlaceFruit();
     SyncBoard();
 }
 
 int SnakeBoard::Score(){
-    return tail.size()-1;
+    return tail.size()-2;
 }
 
 
@@ -109,28 +131,6 @@ bool SnakeBoard::IsGameLost(){
 
 Direction SnakeBoard::GetDefaultDirection(){
     return defaultDirection;
-}
-
-Direction OppositeDirection(Direction dir)
-{
-    switch (dir)
-    {
-    case 1:
-        return LEFT;
-        break;
-    case 2:
-        return UP;
-        break;
-    case 3:
-        return RIGHT;
-        break;
-    case 4:
-        return DOWN;
-        break;
-    default:
-        return LEFT;
-        break;
-    }
 }
 
 char SnakeBoard::GetTile(int y,int x){
