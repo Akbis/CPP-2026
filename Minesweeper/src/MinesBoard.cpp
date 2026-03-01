@@ -53,8 +53,6 @@ void MinesBoard::SetBoard(int row,int column){
             surrounding_tiles.push_back(COLUMNS * (row + 1) + column - 1);
             surrounding_tiles.push_back(COLUMNS * row + column - 1);
         }
-        
-        
     }
     else if(row==ROWS-1){
         surrounding_tiles.push_back(COLUMNS * (row - 1) + column);
@@ -101,6 +99,7 @@ void MinesBoard::SetBoard(int row,int column){
             surrounding_tiles.push_back(COLUMNS * (row + 1) + column - 1);
         }
     }
+    
     sort(surrounding_tiles.begin(), surrounding_tiles.end(), std::greater<int>());
     for(int v:surrounding_tiles){
         temp_mines.erase(temp_mines.begin()+v);

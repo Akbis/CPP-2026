@@ -8,7 +8,9 @@ Minesweeper - console-based game. Requires: reading keyboard input. Also most li
 Snake - console-based game. Requires: reading keyboard input, fun with time.
 
 ## Planned projects
-Anagrams - find all anagrams in given dictionary. Requires: file handling, string comprehension. Warm up before next project on this list.
+Anagrams - find all anagrams in given dictionary. Requires: file handling, string comprehension. Warm up before wordle.
+
+Crosswords - find all words that match given pattern. Same requirements as anagrams.
 
 Wordle - find all sets of 5 5-lettered words that have 25 different letters. Will require file handling. Might be computationally complex.
 
