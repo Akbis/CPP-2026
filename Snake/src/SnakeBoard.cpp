@@ -32,7 +32,7 @@ SnakeBoard::SnakeBoard(){
 }
 
 int SnakeBoard::Score(){
-    return tail.size()-2;
+    return tail.size()-1;
 }
 
 

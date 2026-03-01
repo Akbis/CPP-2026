@@ -68,12 +68,12 @@ int main(){
 
     // as long as there are no detected errors this solves timeout problem
     // halfdelay(2);   // more or less same as below only in tenths of a seconds and negatives not allowed
-    timeout(13500); // when theres no input for n miliseconds of a second it throws ERR which is equal -1,
+    timeout(135); // when theres no input for n miliseconds of a second it throws ERR which is equal -1,
     // can be verified by adding case -1: to NCurInput()
 
     // Colors
     start_color();
-    init_pair(1, COLOR_BLUE, COLOR_BLACK); //Use if background color setting failed
+    init_pair(1, COLOR_CYAN, COLOR_BLACK); //Use if background color setting failed
     init_pair(2, COLOR_RED, COLOR_BLACK);
     // init_pair(1,COLOR_BLUE,COLOR_GREEN);
     // init_pair(2, COLOR_RED, COLOR_GREEN);

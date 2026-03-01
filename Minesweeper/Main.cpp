@@ -111,7 +111,8 @@ std::vector<int> ParseInput()
     std::vector<int> coordinates(2, -1);
     std::cout << "Podaj współrzędne pola: ";
     std::getline(std::cin, coords);
-    
+    // std::cin.clear();
+    // std::cin.sync();
     coords.erase(std::remove(coords.begin(), coords.end(), ' '), coords.end()); //Usuwanie spacji
 
     if (coords.length() < 2) // Sprawdzenie minimalnej długości
@@ -124,7 +125,7 @@ std::vector<int> ParseInput()
         x = toupper(coords.at(0)) - 65;
         coordinates[0]=x;
 
-        if (!(x > 0 && x < COLUMNS-1)) // Sprawdzenie czy pierwsza koordynata jest poprawna
+        if (!(x >= 0 && x < COLUMNS)) // Sprawdzenie czy pierwsza koordynata jest poprawna
         {
             std::cout << "Błędne współrzędne!\n";
             coordinates=ParseInput();
