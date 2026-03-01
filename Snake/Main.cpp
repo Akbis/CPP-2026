@@ -57,8 +57,8 @@ int main(){
     SnakeBoard board;
 
     system("resize -s 35 80");  // resize terminal
-    system("clear");
-    srand(time(0));
+    system("clear");            // resize command prints new dimensions by default
+    srand(time(0));             // seed
 
     initscr();
     noecho();               // don't display getch()
@@ -66,26 +66,19 @@ int main(){
     keypad(stdscr,true);    // allow inputing special keys
     set_escdelay(0);        // without this ESC causes delays
 
-    // as long as there are no detected errors this solves timeout problem
-    // halfdelay(2);   // more or less same as below only in tenths of a seconds and negatives not allowed
+    // as long as there are no detected errors this solves timing problem
     timeout(135); // when theres no input for n miliseconds of a second it throws ERR which is equal -1,
     // can be verified by adding case -1: to NCurInput()
 
     // Colors
     start_color();
-    init_pair(1, COLOR_CYAN, COLOR_BLACK); //Use if background color setting failed
+    init_pair(1, COLOR_CYAN, COLOR_BLACK);
     init_pair(2, COLOR_RED, COLOR_BLACK);
-    // init_pair(1,COLOR_BLUE,COLOR_GREEN);
-    // init_pair(2, COLOR_RED, COLOR_GREEN);
-    init_pair(3, COLOR_RED, COLOR_GREEN);
 
     WINDOW *win=newwin(HEIGHT+2,2*WIDTH+3,5,19);
     refresh();
     box(win,0,0);
     wrefresh(win);
-    // wattron(win,COLOR_PAIR(1));
-    // wbkgd(win,COLOR_PAIR(1));
-    // wbkgd(win, COLOR_PAIR(3));
 
     while (!gameOver)
     {
@@ -117,10 +110,4 @@ TODO
 2. If time exceeded without input move in default direction             DONE
 3. Make it pretty (colors and maybe spacing)                            OK
 4. Adjust window and terimnal size to board size
-
-ISSUES
-1. either fix first move tail issue or reduce starting size, adjust scoring to chosen solution, no idea why it doesn't work  FUCKING STUPID         DONE
-2. look into better solution to hiting edges beyond allocated tiles than two virtual lines          IF IT WORKS IT WORKS
-
-
 */

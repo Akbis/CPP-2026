@@ -4,8 +4,7 @@ bool Point::operator==(Point & pt){
     return (x==pt.x && y==pt.y);
 }
 
-Direction OppositeDirection(Direction dir)
-{
+Direction OppositeDirection(Direction dir){
     switch (dir)
     {
     case 1:
@@ -83,7 +82,7 @@ void SnakeBoard::Move(Direction dir){
                 if(tail.at(i)==tail.back())
                     tail.back() = curHead;
                 else
-                 tail.at(i) = tail.at(i + 1);
+                    tail.at(i) = tail.at(i + 1);
             }
         }
         SyncBoard();
@@ -112,7 +111,6 @@ void SnakeBoard::PlaceFruit(){
 
     std::random_shuffle(tiles_vector.begin(), tiles_vector.end());
     fruit={(int)tiles_vector[0]%HEIGHT,(int)tiles_vector[0]/WIDTH};
-
 }
 
 bool SnakeBoard::IsGameLost(){

@@ -31,7 +31,7 @@ public:
     void PlaceFruit();                  // may or may not be used 
     Direction GetDefaultDirection();    // current direction of movement used when no input 
 
-    char GetTile(int,int);
+    char GetTile(int,int);              // returns tile at given coordinates
 
 };
 

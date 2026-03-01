@@ -56,7 +56,6 @@ void Uncover(MinesBoard Board)
     std::cout << "\n    ";
     for (int i = 0; i < ROWS + 1; i++)
     {
-
         for (int j = 0; j < COLUMNS + 2; j++)
         {
             if (j == 0 && i > 0)
@@ -82,7 +81,6 @@ void Draw(MinesBoard Board)
     std::cout << "\n    ";
     for (int i = 0; i < ROWS + 1; i++)
     {
-
         for (int j = 0; j < COLUMNS + 2; j++)
         {
             if (j == 0 && i > 0)
@@ -110,8 +108,6 @@ std::vector<int> ParseInput()
     std::vector<int> coordinates(2, -1);
     std::cout << "Podaj współrzędne pola: ";
     std::getline(std::cin, coords);
-    // std::cin.clear();
-    // std::cin.sync();
     coords.erase(std::remove(coords.begin(), coords.end(), ' '), coords.end()); //Usuwanie spacji
 
     if (coords.length() < 2) // Sprawdzenie minimalnej długości
