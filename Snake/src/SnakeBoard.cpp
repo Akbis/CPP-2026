@@ -50,6 +50,7 @@ void SnakeBoard::SyncBoard(){
         board[v.y + 1][v.x] = '0';
     }
 }
+
 void SnakeBoard::Move(Direction dir){
     if(dir!=OppositeDirection(defaultDirection)){
         Point curHead=head;
@@ -89,10 +90,6 @@ void SnakeBoard::Move(Direction dir){
     }
     else
         Move(defaultDirection);
-}
-
-void SnakeBoard::Eat(){
-
 }
 
 void SnakeBoard::PlaceFruit(){
