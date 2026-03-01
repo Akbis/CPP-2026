@@ -27,6 +27,7 @@ Direction NcurInput(int input,SnakeBoard board){
     }
     return dir;
 }
+
 void NcurDraw(SnakeBoard board,WINDOW* win){
     for(int i=0;i<HEIGHT;i++){
         for (int j = 0; j<WIDTH; j++)
@@ -102,12 +103,3 @@ int main(){
     getch();
     endwin();
 }
-
-
-/* 
-TODO
-1. Set turn lenght                                                      DONE
-2. If time exceeded without input move in default direction             DONE
-3. Make it pretty (colors and maybe spacing)                            OK
-4. Adjust window and terimnal size to board size
-*/
