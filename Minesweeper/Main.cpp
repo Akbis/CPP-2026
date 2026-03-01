@@ -5,7 +5,6 @@
 
 void Uncover(MinesBoard Board);
 void Draw(MinesBoard Board);
-void InputError(std::string coords);
 std::vector<int> ParseInput();
 
 int main()
