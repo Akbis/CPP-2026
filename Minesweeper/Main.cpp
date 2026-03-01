@@ -5,7 +5,6 @@
 
 void Uncover(MinesBoard Board);
 void Draw(MinesBoard Board);
-void InputError(std::string coords);
 std::vector<int> ParseInput();
 
 int main()
@@ -57,7 +56,6 @@ void Uncover(MinesBoard Board)
     std::cout << "\n    ";
     for (int i = 0; i < ROWS + 1; i++)
     {
-
         for (int j = 0; j < COLUMNS + 2; j++)
         {
             if (j == 0 && i > 0)
@@ -83,7 +81,6 @@ void Draw(MinesBoard Board)
     std::cout << "\n    ";
     for (int i = 0; i < ROWS + 1; i++)
     {
-
         for (int j = 0; j < COLUMNS + 2; j++)
         {
             if (j == 0 && i > 0)
@@ -111,7 +108,6 @@ std::vector<int> ParseInput()
     std::vector<int> coordinates(2, -1);
     std::cout << "Podaj współrzędne pola: ";
     std::getline(std::cin, coords);
-    
     coords.erase(std::remove(coords.begin(), coords.end(), ' '), coords.end()); //Usuwanie spacji
 
     if (coords.length() < 2) // Sprawdzenie minimalnej długości
@@ -122,14 +118,14 @@ std::vector<int> ParseInput()
     else
     {
         x = toupper(coords.at(0)) - 65;
-        coordinates[0]=x;
 
-        if (!(x > 0 && x < COLUMNS-1)) // Sprawdzenie czy pierwsza koordynata jest poprawna
+        if (!(x >= 0 && x < COLUMNS)) // Sprawdzenie czy pierwsza koordynata jest poprawna
         {
-            std::cout << "Błędne współrzędne!\n";
+            std::cout <<"Błędne współrzędne!\n";
             coordinates=ParseInput();
         }
         else{
+            coordinates[0] = x;
             coords.erase(0, 1);
             try
             {
@@ -138,18 +134,18 @@ std::vector<int> ParseInput()
             }
             catch (const std::invalid_argument &e)
             {
-                std::cout << "Błędne współrzędne!\n";
+                std::cout  << "Błędne współrzędne!\n";
                 coordinates = ParseInput();
             }
             catch (const std::out_of_range &e)
             {
-                std::cout << "Błędne współrzędne!\n";
+                std::cout  << "Błędne współrzędne!\n";
                 coordinates = ParseInput(); 
             }
 
-            if (y < 1 || y > ROWS ) 
+            if (coordinates[1] < 1 || coordinates[1] > ROWS ) 
             {
-                std::cout << "Błędne współrzędne!\n";
+                std::cout  << "Błędne współrzędne!\n";
                 coordinates = ParseInput();
             }
         }

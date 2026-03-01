@@ -4,49 +4,50 @@ bool Point::operator==(Point & pt){
     return (x==pt.x && y==pt.y);
 }
 
+Direction OppositeDirection(Direction dir){
+    switch (dir)
+    {
+    case 1:
+        return LEFT;
+        break;
+    case 2:
+        return UP;
+        break;
+    case 3:
+        return RIGHT;
+        break;
+    case 4:
+        return DOWN;
+        break;
+    default:
+        return LEFT;
+        break;
+    }
+}
+
 SnakeBoard::SnakeBoard(){
     PlaceFruit();
     SyncBoard();
 }
 
-void SnakeBoard::Draw(){
-    for (int i = 0; i < HEIGHT; i++)
-    {   
-        std::cout<<" ";
-        for (int j = 0; j < WIDTH; j++)
-        {
-            std::cout << board[i][j] << " ";
-        }
-        std::cout << "\n";
-    }
-    std::cout << "\n";
+int SnakeBoard::Score(){
+    return tail.size()-3;
 }
 
-int SnakeBoard::GetLength(){
-    return tail.size();
-}
-
-Point SnakeBoard::GetHead(){
-    return head;
-}
-
-std::vector<Point> SnakeBoard::GetTail(){
-    return tail;
-}
 
 void SnakeBoard::SyncBoard(){
-    for (int i = 0; i < HEIGHT; i++)
+    for (int i = 0; i < HEIGHT+1; i++)
     {
         for (int j = 0; j < WIDTH; j++)
         {
-            board[i][j] = '*';
-        }
-        board[head.y][head.x] = '@';
-        board[fruit.y][fruit.x] = 'T';
-        for (Point v : tail)
-        {
-            board[v.y][v.x] = '0';
-        }
+            board[i+1][j] = ' ';  // not sure if it should be ' ' or '*'
+        }        
+    }
+    board[head.y + 1][head.x] = '@';
+    board[fruit.y + 1][fruit.x] = 'T';
+    for (Point v : tail)
+    {
+        board[v.y + 1][v.x] = '0';
     }
 }
 void SnakeBoard::Move(Direction dir){
@@ -72,17 +73,17 @@ void SnakeBoard::Move(Direction dir){
             break;
         }
         if(head==fruit){
-            PlaceFruit();
             tail.push_back(curHead);
+            PlaceFruit();
         }
         else{
-        for (size_t i = 0; i < tail.size(); i++)
-           {
-               if(tail.at(i)==tail.back())
-                   tail.back() = curHead;
-               else
-                   tail.at(i) = tail.at(i + 1);
-           }
+            for (size_t i = 0; i < tail.size(); i++)
+            {
+                if(tail.at(i)==tail.back())
+                    tail.back() = curHead;
+                else
+                    tail.at(i) = tail.at(i + 1);
+            }
         }
         SyncBoard();
     }
@@ -90,12 +91,9 @@ void SnakeBoard::Move(Direction dir){
         Move(defaultDirection);
 }
 
-void SnakeBoard::Eat(){
-
-}
 
 void SnakeBoard::PlaceFruit(){
-    std::vector<int> tiles_vector(WIDTH * HEIGHT);
+    std::vector<int> tiles_vector(WIDTH * HEIGHT); // same method as in Minesweeper
     std::iota(tiles_vector.begin(), tiles_vector.end(), 0);
     std::vector<int> taken_tiles;
 
@@ -113,19 +111,16 @@ void SnakeBoard::PlaceFruit(){
 
     std::random_shuffle(tiles_vector.begin(), tiles_vector.end());
     fruit={(int)tiles_vector[0]%HEIGHT,(int)tiles_vector[0]/WIDTH};
-
 }
 
 bool SnakeBoard::IsGameLost(){
-    if (head.x == -1 || head.x == WIDTH || head.y == -1 || head.x == HEIGHT)
+    if (head.x == -1 || head.x == WIDTH || head.y == -1 || head.y == HEIGHT)
     {
-        std::cout<<"out of bounds!\n";
         return true;
     }
     for(Point v : tail){
         if (v==head)
         {
-            std::cout<<"Ouroboros\n";
             return true;
         }      
     }
@@ -136,24 +131,6 @@ Direction SnakeBoard::GetDefaultDirection(){
     return defaultDirection;
 }
 
-Direction OppositeDirection(Direction dir)
-{
-    switch (dir)
-    {
-    case 1:
-        return LEFT;
-        break;
-    case 2:
-        return UP;
-        break;
-    case 3:
-        return RIGHT;
-        break;
-    case 4:
-        return DOWN;
-        break;
-    default:
-        return LEFT;
-        break;
-    }
+char SnakeBoard::GetTile(int y,int x){
+    return board[y+1][x];
 }
