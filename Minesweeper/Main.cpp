@@ -123,14 +123,14 @@ std::vector<int> ParseInput()
     else
     {
         x = toupper(coords.at(0)) - 65;
-        coordinates[0]=x;
 
         if (!(x >= 0 && x < COLUMNS)) // Sprawdzenie czy pierwsza koordynata jest poprawna
         {
-            std::cout << "Błędne współrzędne!\n";
+            std::cout <<"Błędne współrzędne!\n";
             coordinates=ParseInput();
         }
         else{
+            coordinates[0] = x;
             coords.erase(0, 1);
             try
             {
@@ -139,18 +139,18 @@ std::vector<int> ParseInput()
             }
             catch (const std::invalid_argument &e)
             {
-                std::cout << "Błędne współrzędne!\n";
+                std::cout  << "Błędne współrzędne!\n";
                 coordinates = ParseInput();
             }
             catch (const std::out_of_range &e)
             {
-                std::cout << "Błędne współrzędne!\n";
+                std::cout  << "Błędne współrzędne!\n";
                 coordinates = ParseInput(); 
             }
 
-            if (y < 1 || y > ROWS ) 
+            if (coordinates[1] < 1 || coordinates[1] > ROWS ) 
             {
-                std::cout << "Błędne współrzędne!\n";
+                std::cout  << "Błędne współrzędne!\n";
                 coordinates = ParseInput();
             }
         }
