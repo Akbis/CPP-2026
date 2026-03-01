@@ -32,7 +32,7 @@ SnakeBoard::SnakeBoard(){
 }
 
 int SnakeBoard::Score(){
-    return tail.size()-1;
+    return tail.size()-3;
 }
 
 
@@ -42,13 +42,13 @@ void SnakeBoard::SyncBoard(){
         for (int j = 0; j < WIDTH; j++)
         {
             board[i+1][j] = ' ';  // not sure if it should be ' ' or '*'
-        }
-        board[head.y+1][head.x] = '@';
-        board[fruit.y+1][fruit.x] = 'T';
-        for (Point v : tail)
-        {
-            board[v.y+1][v.x] = '0';
-        }
+        }        
+    }
+    board[head.y + 1][head.x] = '@';
+    board[fruit.y + 1][fruit.x] = 'T';
+    for (Point v : tail)
+    {
+        board[v.y + 1][v.x] = '0';
     }
 }
 void SnakeBoard::Move(Direction dir){
@@ -78,13 +78,13 @@ void SnakeBoard::Move(Direction dir){
             PlaceFruit();
         }
         else{
-        for (size_t i = 0; i < tail.size(); i++)
-           {
-               if(tail.at(i)==tail.back())
-                   tail.back() = curHead;
-               else
-                   tail.at(i) = tail.at(i + 1);
-           }
+            for (size_t i = 0; i < tail.size(); i++)
+            {
+                if(tail.at(i)==tail.back())
+                    tail.back() = curHead;
+                else
+                 tail.at(i) = tail.at(i + 1);
+            }
         }
         SyncBoard();
     }

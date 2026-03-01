@@ -55,7 +55,7 @@ int main(){
     bool gameOver = false;
     int input;
     SnakeBoard board;
-    
+
     system("resize -s 35 80");  // resize terminal
     system("clear");
     srand(time(0));
@@ -92,7 +92,7 @@ int main(){
         NcurDraw(board, win);
         input=getch();
         board.Move(NcurInput(input,board));
-        
+
         if(board.IsGameLost()){
             gameOver=true;
             mvprintw(3,37,"Game Over");
@@ -115,12 +115,12 @@ int main(){
 TODO
 1. Set turn lenght                                                      DONE
 2. If time exceeded without input move in default direction             DONE
-3. Make it pretty (colors and maybe spacing)
+3. Make it pretty (colors and maybe spacing)                            OK
 4. Adjust window and terimnal size to board size
 
 ISSUES
-1. either fix first move tail issue or reduce starting size, adjust scoring to chosen solution, no idea why it doesn't work
-2. look into better solution to hiting edges beyond allocated tiles than two virtual lines
+1. either fix first move tail issue or reduce starting size, adjust scoring to chosen solution, no idea why it doesn't work  FUCKING STUPID         DONE
+2. look into better solution to hiting edges beyond allocated tiles than two virtual lines          IF IT WORKS IT WORKS
 
 
 */

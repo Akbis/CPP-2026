@@ -19,8 +19,8 @@ class SnakeBoard{
     char board[HEIGHT+2][WIDTH];
     Point head={WIDTH/2,HEIGHT/2};
     Point fruit;
-    std::vector<Point> tail = {{WIDTH / 2 - 1, HEIGHT / 2}/*, {WIDTH / 2 - 2, HEIGHT / 2}, {WIDTH / 2 - 3, HEIGHT / 2}*/}; // Tail, first element of vector is end of the tail
-    Direction defaultDirection=RIGHT;
+    std::vector<Point> tail = {{WIDTH / 2 - 3, HEIGHT / 2}, {WIDTH / 2 - 2, HEIGHT / 2}, {WIDTH / 2 - 1, HEIGHT / 2}}; // Tail, first element of vector is end of the tail
+    Direction defaultDirection = RIGHT;
 
 public:
     SnakeBoard();                       // Board initialization
@@ -39,4 +39,3 @@ Direction OppositeDirection(Direction dir);
 
 // here snake and the board are in a way completly independent entities, have to remember that changing head or tail doesnt impact the board
 
-// Will have to add tracking of current direction to prevent 180 turns
