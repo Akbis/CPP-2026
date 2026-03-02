@@ -8,12 +8,12 @@ Snake - console-based game. Requires: reading keyboard input, fun with time.  Wo
 
 Anagrams - find all anagrams in given dictionary. Requires: file handling, string comprehension. Warm up before wordle. Working version completed: 02.03.2026
 
+Crosswords - find all words that match given pattern. Same requirements as anagrams. Working version completed: 02.03.2026
+
 ## Projects in progress
-Crosswords - find all words that match given pattern. Same requirements as anagrams.
+Wordle - find all sets of 5 5-lettered words that have 25 different letters. Will require file handling. Might be computationally complex.
 
 ## Planned projects
-
-Wordle - find all sets of 5 5-lettered words that have 25 different letters. Will require file handling. Might be computationally complex.
 
 BestWords - find best possible starting word for wordle.
 
