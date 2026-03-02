@@ -3,7 +3,9 @@ Projects made while learning C++ starting from 10.02.2026
 
 ## Completed Projects
 Minesweeper - console-based game. Requires: reading keyboard input. Also most likely will have to learn to properly use git and cmake. Working version completed: 16.02.2026
+
 Snake - console-based game. Requires: reading keyboard input, fun with time.  Working version completed: 01.03.2026
+
 Anagrams - find all anagrams in given dictionary. Requires: file handling, string comprehension. Warm up before wordle. Working version completed: 02.03.2026
 
 ## Projects in progress
