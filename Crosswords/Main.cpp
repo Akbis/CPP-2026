@@ -1,19 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <string>
-
-// int BetterLenght(std::string word){ // Might be usefull if i tried in polish
-//     int num_code_points = 0;
-//     for (char byte : word)
-//     {
-//         if ((byte & 0xC0) != 0x80)
-//         {
-//             num_code_points++;
-//         }
-//     }
-//     return num_code_points;
-// }
 
 int main(int argc, char** argv){
     if (argc != 2)
@@ -35,11 +22,10 @@ int main(int argc, char** argv){
         if (str.length() == input.length() && str.at(str.length()-2) != '\'') // Zawężenie obszaru wyszukiwania do słóœ o odpowiedniej długości
         {
             dict.push_back(str);
-        }
-        
+        }   
     }
     dictionary.close();
-    
+
     for(std::string w:dict)
     {
         isMatching=true;
@@ -60,6 +46,4 @@ int main(int argc, char** argv){
     std::cout<<number_of_results<<" results found:\n";
     for(std::string w:results)
         std::cout<<w<<"\n";
-
-
 }
