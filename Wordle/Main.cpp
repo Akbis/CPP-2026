@@ -38,7 +38,7 @@ int main()
     
     // size=dict.size();
     std::sort(dict.begin(),dict.end(),StrCompare);
-    // temp = dict;
+    temp = dict;
     // str=dict.at(0);
     // for(std::string str : dict){
         // for (size_t i=1;i<temp.size();i++){
@@ -74,22 +74,23 @@ int main()
     //     std::cout  << "\n";
     // }
 
-    // temp = MatchingWords(temp.at(3), temp);
+    temp = MatchingWords("crwth", temp);
     // temp = MatchingWords(temp.at(0), temp);
     // temp = MatchingWords(temp.at(7), temp);
     std::vector<int> vovels={0,0,0,0,0,0};
     for (std::string w : dict){
-        std::cout << w <<" " <<CountVovels(w)<<"\n";
+        // std::cout << w <<" " <<CountVovels(w)<<"\n";
         vovels.at(CountVovels(w))++;
-        if(CountVovels(w)==4)
-            temp.push_back(w);
+        // if(CountVovels(w)==0)
+            // temp.push_back(w);
     }
 
     std::cout << temp.size()<<'\n';
+
     for(int i : vovels)
         std::cout<<i<<" ";
     
-        for (std::string w : temp)
+    for (std::string w : temp)
         std::cout << w << "\n";
 
     auto stop = std::chrono::high_resolution_clock::now();

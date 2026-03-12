@@ -6,7 +6,7 @@ Minesweeper - console-based game. Requires: reading keyboard input. Also most li
 
 Snake - console-based game. Requires: reading keyboard input, fun with time.  Working version completed: 01.03.2026
 
-Anagrams - find all anagrams in given dictionary. Requires: file handling, string comprehension. Warm up before wordle. Working version completed: 02.03.2026
+Palindromes - find all palindromes in given dictionary. Requires: file handling, string comprehension. Warm up before wordle. Working version completed: 02.03.2026
 
 Crosswords - find all words that match given pattern. Same requirements as anagrams. Working version completed: 02.03.2026
 
