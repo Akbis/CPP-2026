@@ -5,6 +5,7 @@
 #include <chrono>
 #include <set>
 // bool IsRepeatingLetters(std::string a);
+// bool hasAnagrams(std::string a, std::vector<std::string> dict);
 
 int main()
 {
@@ -91,3 +92,7 @@ int main()
 //     }
 //     return count;
 // }
+
+// bool hasAnagrams(std::string a, std::vector<std::string> dict){
+//
+//}
