@@ -7,9 +7,8 @@
 bool StrCompare(std::string a, std::string b) { return a < b; }
 bool IsRepeatingLetters(std::string a); // checks if word have any repeating letters
 bool HaveSameLetters(std::string a, std::string b); // checks if two words share any letters
-std::vector<std::string> MatchingWords(std::string str, std::vector<std::string> dict); // finds all words in a dictionary that share no letters wit string
-int CountVovels(std::string str); // IDEA: thers limited ammount of vovels and words cannot share letters, so I probbly could throw out words with too much of them
-
+bool hasAnagram(std::string str, std::vector<std::string> dict);
+    std::vector<std::string> MatchingWords(std::string str, std::vector<std::string> dict); // finds all words in a dictionary that share no letters wit string
 int main()
 {
 
@@ -74,25 +73,16 @@ int main()
     //     std::cout  << "\n";
     // }
 
-    temp = MatchingWords("crwth", temp);
-    // temp = MatchingWords(temp.at(0), temp);
-    // temp = MatchingWords(temp.at(7), temp);
-    std::vector<int> vovels={0,0,0,0,0,0};
-    for (std::string w : dict){
-        // std::cout << w <<" " <<CountVovels(w)<<"\n";
-        vovels.at(CountVovels(w))++;
-        // if(CountVovels(w)==0)
-            // temp.push_back(w);
-    }
 
-    std::cout << temp.size()<<'\n';
 
-    for(int i : vovels)
-        std::cout<<i<<" ";
+    
+
     
     for (std::string w : temp)
         std::cout << w << "\n";
 
+    std::cout << temp.size() << '\n';
+    
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
     std::cout << "\nTime taken by function: " << duration.count() << " microseconds\n";
@@ -120,6 +110,11 @@ bool HaveSameLetters(std::string a, std::string b){
     return false;
 }
 
+bool hasAnagram(std::string str, std::vector<std::string> dict){
+
+
+}
+
 std::vector<std::string> MatchingWords(std::string str, std::vector<std::string> dict){
     for (size_t i = 0; i < dict.size(); i++)
     {
@@ -131,13 +126,4 @@ std::vector<std::string> MatchingWords(std::string str, std::vector<std::string>
     }
     dict.push_back(str);
     return dict;
-}
-
-int CountVovels(std::string str){
-    int count=0;
-    for(char c : str){
-        if(c=='a' || c=='e' || c=='i' || c=='o' || c=='u' )
-            count++;
-    }
-    return count;
 }
