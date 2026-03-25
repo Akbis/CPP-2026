@@ -3,6 +3,7 @@
 #include <vector>
 #include <algorithm>
 #include <chrono>
+#include <set>
 
 bool StrCompare(std::string a, std::string b) { return a < b; }
 bool IsRepeatingLetters(std::string a); // checks if word have any repeating letters
@@ -75,14 +76,11 @@ int main()
 
 
 
-    
-
-    
     for (std::string w : temp)
         std::cout << w << "\n";
 
     std::cout << temp.size() << '\n';
-    
+
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
     std::cout << "\nTime taken by function: " << duration.count() << " microseconds\n";
@@ -111,7 +109,13 @@ bool HaveSameLetters(std::string a, std::string b){
 }
 
 bool hasAnagram(std::string str, std::vector<std::string> dict){
-
+    std::sort(str.begin(), str.end());
+    for (std::string word : dict){
+        std::sort(word.begin(), word.end());
+        if (str == word)
+            return true;
+    }
+    return false'
 
 }
 
