@@ -41,7 +41,7 @@ int main(){
     int size = dict.size();
     std::vector<std::string> two_words;
     for(int i=0; i<size-1; i++){
-        for(int j=i+1; j<size; j++){
+        for(int j=i; j<size; j++){
             if(!HaveSameLetters(dict.at(i),dict.at(j)))
                 two_words.push_back(dict.at(i)+dict.at(j));
         }
@@ -51,10 +51,11 @@ int main(){
     std::vector<std::string> four_words;
     for (int i = 0; i < two_size - 1; i++)
     {
+        std::cout << i << "  ";
+
         for (int j = i + 1; j < two_size; j++)
         {
-            // if (!(i % (int)(two_size / 100)))
-                // std::cout <<100*i/two_size<<"%\n";
+
             if (!HaveSameLetters(two_words.at(i), two_words.at(j)))
                                  four_words.push_back(two_words.at(i) + two_words.at(j));
         }
@@ -93,9 +94,14 @@ int main(){
 
         //     std::cout  << "\n";
         // }
+//2367071
+    //     for (std::string w : two_words)
+    //         std::cout << w << "\n";
 
-        for (std::string w : four_words)
-            std::cout << w << "\n";
+    // std::cout << two_words.size() << '\n';
+
+    for (std::string w : four_words)
+        std::cout << w << "\n";
 
     std::cout << four_words.size() << '\n';
 
@@ -117,12 +123,20 @@ bool IsRepeatingLetters(std::string a){
 }
 
 bool HaveSameLetters(std::string a, std::string b){
-    for(char c1 : a){
-        for(char c2 : b){
-            if(c1==c2)
-                return true;
-        }
+    short freq[26] = {0};
+
+    for (char c1 : a)
+        freq[c1 - 'a']++;
+
+    for (char c2 : b)
+        freq[c2 - 'a']++;
+
+    for (short i : freq)
+    {
+        if (i == 2)
+            return true;
     }
+
     return false;
 }
 
