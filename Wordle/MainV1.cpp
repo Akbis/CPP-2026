@@ -41,31 +41,31 @@ int main(){
     dictionary2.close();
 
     
-    std::sort(dict.begin(),dict.end(),StrCompare); // not really necessary, mainly for my comfort - can be deleted
-    temp = dict;
+    // std::sort(dict.begin(),dict.end(),StrCompare); // not really necessary, mainly for my comfort - can be deleted
+    // temp = dict;
 
-    int size = dict.size();
-    std::vector<std::string> two_words;
-    for(int i=0; i<size-1; i++){
-        for(int j=i; j<size; j++){
-            if(!HaveSameLetters(dict.at(i),dict.at(j)))
-                two_words.push_back(dict.at(i)+dict.at(j));
-        }
-    }
+    // int size = dict.size();
+    // std::vector<std::string> two_words;
+    // for(int i=0; i<size-1; i++){
+    //     for(int j=i; j<size; j++){
+    //         if(!HaveSameLetters(dict.at(i),dict.at(j)))
+    //             two_words.push_back(dict.at(i)+dict.at(j));
+    //     }
+    // }
 
-    int two_size = two_words.size();
-    std::vector<std::string> four_words;
-    for (int i = 0; i < two_size - 1; i++)
-    {
-        std::cout << i << "  ";
+    // int two_size = two_words.size();
+    // std::vector<std::string> four_words;
+    // for (int i = 0; i < two_size - 1; i++)
+    // {
+    //     std::cout << i << "  ";
 
-        for (int j = i + 1; j < two_size; j++)
-        {
+    //     for (int j = i + 1; j < two_size; j++)
+    //     {
 
-            if (!HaveSameLetters(two_words.at(i), two_words.at(j)))
-                                 four_words.push_back(two_words.at(i) + two_words.at(j));
-        }
-    }
+    //         if (!HaveSameLetters(two_words.at(i), two_words.at(j)))
+    //                              four_words.push_back(two_words.at(i) + two_words.at(j));
+    //     }
+    // }
         // str=dict.at(0);
         // for(std::string str : dict){
         // for (size_t i=1;i<temp.size();i++){
@@ -106,10 +106,11 @@ int main(){
 
     // std::cout << two_words.size() << '\n';
 
-    for (std::string w : four_words)
-        std::cout << w << "\n";
+    // for (std::string w : four_words)
+    //     std::cout << w << "\n";
 
-    std::cout << four_words.size() << '\n';
+    // std::cout << four_words.size() << '\n';
+    std::cout<< dict.size()<<'\n';
 
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
