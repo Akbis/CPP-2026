@@ -63,7 +63,18 @@ int main(){
     dictionary.close();
 
     std::vector<encoded_words> two_words;
-    for(int i=0; i<dict.size()-1; i++){
+    /*
+    it could be continued this way up to five words, but the problem is that there will be duplicates as (ab + cd) + (ef +gh) = (ab +ef) + (cd +gh)
+    maybe this could be resolved by sorting or double checking
+    */
+
+    /* 
+    another idea - not a very good one
+    I could do straight five loops, but woth narrownig size of each loop
+    next loop could iterate only over those words which have no common letters with result of previous loop
+    another words - only those words that were matched will bo considered in next loop
+    */
+    for(int i=0; i<dict.size()-1; i++){ 
         for(int j=i+1; j<dict.size(); j++){
             if((words[i].bword | words[j].bword) == (words[i].bword ^ words[j].bword)){
                 two_words.push_back({words[i].word + words[j].word, words[i].bword | words[j].bword});
@@ -75,12 +86,12 @@ int main(){
     // for (std::string w : dict)
     //     std::cout << w << "\n";
 
-    // std::cout << dict.size() << '\n';
+    std::cout << dict.size() << '\n'; //5182
 
     // for (auto w : two_words)
     //     std::cout << w.word <<"  "<<w.bword << "\n";
 
-    std::cout << two_words.size() << '\n';
+    std::cout << two_words.size() << '\n'; //2367071
 
 
     auto stop = std::chrono::high_resolution_clock::now();
