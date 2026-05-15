@@ -5,15 +5,36 @@
 #include <vector>
 #include <algorithm>
 #include <chrono>
-// #include <set>
+#include <bitset>
+struct encoded_words{
+    std::string word;
+    std::bitset<26> bword;
+};
 
-bool StrCompare(std::string a, std::string b) { return a < b; }
-int getHash(std::string word);
+// std::bitset<26> encode(std::string word);
+// bool StrCompare(std::string a, std::string b) { return a < b; }
+// int getHash(std::string word);
+int getHash(std::string word){
+    int hash = 0;
+    for(int i=0; i<5; i++){
+        hash = hash*26 + (word[i] - 'a');
+    }
+    return hash;
+}
+
+std::bitset<26> encode(std::string word){
+    std::bitset<26> res(0);
+    for(int i=0; i<5; i++){
+        res.set(word[i] - 'a');
+    }
+    return res;
+}
 
 int main(){
 
-    /* Loading words & removing anagrams*/
+    /* Loading words && removing anagrams*/
     std::vector<std::string> dict;
+    std::vector<encoded_words> words;
     std::vector<bool> is_word(26*26*26*26*26);
 
     std::ifstream dictionary("in_words.txt");
@@ -37,6 +58,7 @@ int main(){
         if(is_word[hash]) continue;
         is_word[hash] = true;
         dict.push_back(word);
+        words.push_back({word, encode(word)});
 
 
 
@@ -51,15 +73,14 @@ int main(){
 
     std::cout << dict.size() << '\n';
 
+        for (auto w : words)
+        std::cout << w.word <<"  "<<w.bword << "\n";
+
+    std::cout << words.size() << '\n';
+
+
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
     std::cout << "\nExecution time: " << duration.count() << " microseconds\n";
 }
 
-int getHash(std::string word){
-    int hash = 0;
-    for(int i=0; i<5; i++){
-        hash = hash*26 + (word[i] - 'a');
-    }
-    return hash;
-}
