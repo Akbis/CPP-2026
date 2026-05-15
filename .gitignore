@@ -51,3 +51,11 @@ build-*/
 .vscode/
 vscode/
 /vscode/
+
+# Files without extention (binary)
+# Ignore all
+*
+# Unignore all with extensions
+!*.*
+# Unignore all dirs
+!*/
