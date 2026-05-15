@@ -59,24 +59,28 @@ int main(){
         is_word[hash] = true;
         dict.push_back(word);
         words.push_back({word, encode(word)});
-
-
-
     }
     dictionary.close();
 
-
+    std::vector<encoded_words> two_words;
+    for(int i=0; i<dict.size()-1; i++){
+        for(int j=i+1; j<dict.size(); j++){
+            if((words[i].bword | words[j].bword) == (words[i].bword ^ words[j].bword)){
+                two_words.push_back({words[i].word + words[j].word, words[i].bword | words[j].bword});
+            }
+        }
+    }
     // std::sort(dict.begin(), dict.end(), StrCompare); // not really necessary, mainly for my comfort - can be deleted
 
-    for (std::string w : dict)
-        std::cout << w << "\n";
+    // for (std::string w : dict)
+    //     std::cout << w << "\n";
 
-    std::cout << dict.size() << '\n';
+    // std::cout << dict.size() << '\n';
 
-        for (auto w : words)
-        std::cout << w.word <<"  "<<w.bword << "\n";
+    // for (auto w : two_words)
+    //     std::cout << w.word <<"  "<<w.bword << "\n";
 
-    std::cout << words.size() << '\n';
+    std::cout << two_words.size() << '\n';
 
 
     auto stop = std::chrono::high_resolution_clock::now();
