@@ -23,6 +23,6 @@ Two body problem - Simulate system consisting of two massive bodies. Will requir
 
 2D Tracing - simple simulation of light rays in 2D environment. Will require Qt or maybe OpenGL not yet sure
 
-And more to came...
+And more to come...
 
 
