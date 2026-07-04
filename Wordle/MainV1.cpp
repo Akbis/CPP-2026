@@ -1,174 +1,162 @@
+// In this version words will be represented by bit fields
+
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <algorithm>
 #include <chrono>
-#include <set>
+#include <bitset>
+#include <array>
+struct encoded_word
+{
+    std::string word;
+    std::bitset<26> bword;
+};
+std::ostream &operator<<(std::ostream &out, const encoded_word &obj)
+{
+    return out << obj.word << " " << obj.bword << "\n";
+}
 
-// This version is not finished and probably won't ever be
-// It was created only to give a reference point for better versions
-/* Even if I completed it, it runs for 16 hours,
-   and I don't want to wait entire day just to see if it's correct every time I change something*/
-// moving on to version 2
+// std::bitset<26> encode(std::string word);
+// bool StrCompare(std::string a, std::string b) { return a < b; }
 
-bool StrCompare(std::string a, std::string b) { return a < b; }
-bool IsRepeatingLetters(std::string a); // checks if word have any repeating letters
-bool HaveSameLetters(std::string a, std::string b); // checks if two words share any letters
-bool hasAnagram(std::string str, std::vector<std::string> dict); // checks is dictionary contains any anagram of given word
-std::vector<std::string> MatchingWords(std::string str, std::vector<std::string> dict); // finds all words in a dictionary that share no letters wit string
-
-int main(){
-
-    std::vector<std::string> dict,temp;
-
-    std::ifstream dictionary1("wordle-La.txt");
-    std::ifstream dictionary2("wordle-Ta.txt");
-    std::string str;
-
-
-    auto start = std::chrono::high_resolution_clock::now();
-    while (std::getline(dictionary1, str))
+bool has_unique_letters(std::string word)
+{
+    bool letters_are_unique = true;
+    std::sort(word.begin(), word.end());
+    for (int i = 0; i < 4; i++)
     {
-        if(!IsRepeatingLetters(str) && !hasAnagram(str, dict))
-            dict.push_back(str);
-    }
-    dictionary1.close();
-    while (std::getline(dictionary2, str))
-    {
-        if (!IsRepeatingLetters(str) && !hasAnagram(str,dict))
-            dict.push_back(str);
-    }
-    dictionary2.close();
-
-    
-    std::sort(dict.begin(),dict.end(),StrCompare); // not really necessary, mainly for my comfort - can be deleted
-    temp = dict;
-
-    int size = dict.size();
-    std::vector<std::string> two_words;
-    for(int i=0; i<size-1; i++){
-        for(int j=i; j<size; j++){
-            if(!HaveSameLetters(dict.at(i),dict.at(j)))
-                two_words.push_back(dict.at(i)+dict.at(j));
+        if (word[i] == word[i + 1])
+        {
+            letters_are_unique = false;
+            break;
         }
     }
+    return letters_are_unique;
+}
+int getHash(std::string word)
+{
+    int hash = 0;
+    std::sort(word.begin(), word.end());
+    for (int i = 0; i < 5; i++)
+    {
+        hash = hash * 26 + (word[i] - 'a');
+    }
+    return hash;
+}
 
-    int two_size = two_words.size();
-    // std::vector<std::string> four_words;
-    // for (int i = 0; i < two_size - 1; i++)
-    // {
-    //     std::cout << i << "  ";
+std::bitset<26> encode(std::string word)
+{
+    std::bitset<26> res(0);
+    for (int i = 0; i < 5; i++)
+    {
+        res.set(word[i] - 'a');
+    }
+    return res;
+}
 
-    //     for (int j = i + 1; j < two_size; j++)
-    //     {
+int main()
+{
 
-    //         if (!HaveSameLetters(two_words.at(i), two_words.at(j)))
-    //                              four_words.push_back(two_words.at(i) + two_words.at(j));
-    //     }
-    // }
-        // str=dict.at(0);
-        // for(std::string str : dict){
-        // for (size_t i=1;i<temp.size();i++){
-        //     for (int j = 0; j < 5; j++){
-        //         for(int h=0;h<5;h++){
-        //             if(str.at(j)==temp.at(i).at(h)){
-        //                 temp.erase(temp.begin()+i);
-        //                 del=true;
-        //                 i-=1;
-        //                 break;
-        //             }
-        //         }
-        //         if(del)
-        //             break;
-        //     }
+    /* Loading words && removing anagrams*/
+    std::vector<std::string> dict;
+    std::vector<encoded_word> words;
+    std::vector<bool> is_word(26 * 26 * 26 * 26 * 26);
+    // std::array<std::vector<std::string>, 26> alphabetical_words;
+
+    auto start = std::chrono::high_resolution_clock::now();
+    std::ifstream dictionary("words_alpha_five.txt");
+    while (!dictionary.eof())
+    {
+        std::string word;
+        dictionary >> word;
+        if (!has_unique_letters(word))
+            continue;
+        int hash = getHash(word);
+        if (is_word[hash])
+            continue;
+        is_word[hash] = true;
+        dict.push_back(word);
+        encoded_word tmp_encoded = {word, encode(word)};
+        // for(int i=0; i<26; i++)
+        //     alphabetical_words[i].push_back(word);
+        // for(int i=0; i<5; i++){
+        //     alphabetical_words.at(word[i] - 'a').pop_back();
         // }
-        // }
+        words.push_back(tmp_encoded);
+    }
 
-        // for (size_t j = 0; j < 1; j++)
-        // {
-        //     temp=dict;
-        //     for (size_t i = 1; i < temp.size(); i++)
-        //     {
-        //         if(HaveSameLetters(dict.at(j),temp.at(i))){
-        //             temp.erase(temp.begin() + i);
-        //             i -= 1;
-        //         }
+    int size = dict.size();
+    std::vector<encoded_word> result;
+    for (int i = 0; i < size - 4; i++)
+    {
 
-        //     }
-        //     for (std::string w : temp)
-        //         std::cout << w << "\n";
+        for (int j = i + 1; j < size - 3; j++)
+        {
+            if ((words[i].bword & words[j].bword) == 0)
+            {
+                encoded_word double_word = {words[i].word + words[j].word,
+                                            words[i].bword | words[j].bword};
 
-        //     std::cout  << "\n";
-        // }
-//2367071
-        // for (std::string w : two_words)
-            // std::cout << w << "\n";
+                for (int k = j + 1; k < size - 2; k++)
+                {
+                    if ((double_word.bword & words[k].bword) == 0)
+                    {
+                        encoded_word triple_word = {double_word.word + words[k].word,
+                                                    double_word.bword | words[k].bword};
 
-    std::cout << two_words.size() << '\n';
+                        for (int l = k + 1; l < size - 1; l++)
+                        {
+                            if ((triple_word.bword & words[l].bword) == 0)
+                            {
+                                encoded_word quad_word = {triple_word.word + words[l].word,
+                                                          triple_word.bword | words[l].bword};
 
-    // for (std::string w : four_words)
-    //     std::cout << w << "\n";
-
-    // std::cout << four_words.size() << '\n';
-    // std::cout<< dict.size()<<'\n';
+                                for (int m = l + 1; m < size; m++)
+                                {
+                                    if ((quad_word.bword & words[m].bword) == 0)
+                                    {
+                                        encoded_word pent_word = {quad_word.word + words[m].word,
+                                                                  quad_word.bword | words[m].bword};
+                                        result.push_back(pent_word);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    std::cout << result.size() << "\n";
+    for (auto w : result)
+        std::cout << w;
 
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-    std::cout << "\nTime taken by function: " << duration.count() << " microseconds\n";
-}
-//  57545681480
-// 16 h
-
-bool IsRepeatingLetters(std::string a){
-    for (size_t i = 0; i < a.length() - 1; i++)
-    {
-        for (size_t j = i + 1; j < a.length(); j++)
-        {
-            if (a.at(i) == a.at(j))
-                return true;
-        }
-    }
-    return false;
+    std::cout << "\nExecution time: " << duration.count() << " microseconds\n";
 }
 
-bool HaveSameLetters(std::string a, std::string b){
-    short freq[26] = {0};
+/*
+file - in_words.txt
+10 without anagrams
+brick jumpy glent vozhd waqfs 11011111111111111111111111
+chunk fjord waltz gymps vibex 11111111101111111111111111
+fjord nymph waltz gucks vibex 11111111101111111111111111
+jumpy bling treck vozhd waqfs 11011111111111111111111111
+prick glent jumby vozhd waqfs 11011111111111111111111111
+bemix clunk grypt vozhd waqfs 11111111111111110111111111
+blunk cimex grypt vozhd waqfs 11111111111111110111111111
+brung cylix kempt vozhd waqfs 11111111111111110111111111
+clipt jumby kreng vozhd waqfs 11011111111111111111111111
+jumby pling treck vozhd waqfs 11011111111111111111111111
+Execution time: 629'794'311 microseconds
+*/
 
-    for (char c1 : a)
-        freq[c1 - 'a']++;
+/*
+file alpha_words_five.txr
+538 without anagrams
+in file results.txt
+Execution time: 1146'661'738 microseconds
 
-    for (char c2 : b)
-        freq[c2 - 'a']++;
-
-    for (short i : freq)
-    {
-        if (i == 2)
-            return true;
-    }
-
-    return false;
-}
-
-bool hasAnagram(std::string str, std::vector<std::string> dict){
-    std::sort(str.begin(), str.end());
-    for (std::string word : dict){
-        std::sort(word.begin(), word.end());
-        if (str == word)
-            return true;
-    }
-    return false;
-}
-
-    std::vector<std::string> MatchingWords(std::string str, std::vector<std::string> dict)
-{
-    for (size_t i = 0; i < dict.size(); i++)
-    {
-        if (HaveSameLetters(str, dict.at(i)))
-        {
-            dict.erase(dict.begin() + i);
-            i -= 1;
-        }
-    }
-    dict.push_back(str);
-    return dict;
-}
+*/
