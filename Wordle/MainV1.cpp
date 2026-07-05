@@ -1,4 +1,4 @@
-// In this version words will be represented by bit fields
+// This is first functioning version, which is used for reference
 
 #include <iostream>
 #include <fstream>
@@ -17,7 +17,6 @@ std::ostream &operator<<(std::ostream &out, const encoded_word &obj)
     return out << obj.word << " " << obj.bword << "\n";
 }
 
-// std::bitset<26> encode(std::string word);
 // bool StrCompare(std::string a, std::string b) { return a < b; }
 
 bool has_unique_letters(std::string word)

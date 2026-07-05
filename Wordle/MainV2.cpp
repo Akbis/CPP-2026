@@ -7,15 +7,24 @@
 #include <chrono>
 #include <bitset>
 #include <array>
+#include <unordered_map>
 struct encoded_word{
     std::string word;
     std::bitset<26> bword;
 };
-std::ostream& operator<<(std::ostream &out, const encoded_word &obj){
-    return out << obj.word << " " << obj.bword << "\n";
+std::ostream &operator<<(std::ostream &out, const encoded_word &obj)
+{
+    int it = 0;
+    for (auto c : obj.word)
+    {
+        out << c;
+        ++it;
+        if (!(it % 5))
+            out << " ";
+    }
+    return out << obj.bword << "\n";
 }
 
-// std::bitset<26> encode(std::string word);
 // bool StrCompare(std::string a, std::string b) { return a < b; }
 
 bool has_unique_letters(std::string word){
@@ -53,7 +62,9 @@ int main(){
     /* Loading words && removing anagrams*/
     std::vector<std::string> dict;
     std::vector<encoded_word> words;
-    std::vector<bool> is_word(26*26*26*26*26);
+    std::vector<bool> is_word(26 * 26 * 26 * 26 * 26);// real max value is actually 9999364 for word without repeating letters, but that probably doesn't matter all that much
+    // std::vector<std::vector<std::string>> anagrams; // could be replaced by python style dictionary - i think in c++ those are maps
+    std::unordered_map<int,std::vector<std::string>> anagrams_map; // this one is better, I think - int is hash, and vector contains all corresponding words
     // std::array<std::vector<std::string>, 26> alphabetical_words;
 
     auto start = std::chrono::high_resolution_clock::now();
@@ -64,8 +75,11 @@ int main(){
         dictionary >> word;
         if(!has_unique_letters(word)) continue;
         int hash = getHash(word);
-        if (is_word[hash])
+        if (is_word[hash]){
+            anagrams_map[hash].push_back(word);
             continue;
+        }
+        anagrams_map.insert({hash, {word}});
         is_word[hash] = true;
         dict.push_back(word);
         encoded_word tmp_encoded = {word, encode(word)};
@@ -76,48 +90,64 @@ int main(){
         // }
         words.push_back(tmp_encoded);        
     }
-    
+
     int size = dict.size();
-    std::vector<encoded_word> result;
-    for(int i=0; i < size - 4; i++){
-
-        for (int j=i+1; j < size - 3; j++){
-            if((words[i].bword & words[j].bword) == 0){
-                encoded_word double_word = { words[i].word + words[j].word,
-                                             words[i].bword | words[j].bword };
-
-                for(int k = j+1; k < size-2; k++){
-                    if ((double_word.bword & words[k].bword) == 0){
-                        encoded_word triple_word = {double_word.word + words[k].word,
-                                                    double_word.bword | words[k].bword};
-
-                        for (int l = k + 1; l < size-1; l++)
-                        {
-                            if ((triple_word.bword & words[l].bword) == 0)
-                            {
-                                encoded_word quad_word = {triple_word.word + words[l].word,
-                                                            triple_word.bword | words[l].bword};
-
-                                for (int m = l + 1; m < size; m++)
-                                {
-                                    if ((quad_word.bword & words[m].bword) == 0)
-                                    {
-                                        encoded_word pent_word = {quad_word.word + words[m].word,
-                                                                  quad_word.bword | words[m].bword};
-                                        result.push_back(pent_word);
-                                    }
-                                }
-                            }
-                        }
-                        
-                    }
-                } 
-            }
-        }
+    
+    // for confirmation that the map works correctly
+    for (auto it = anagrams_map.begin(); it != anagrams_map.end(); it++)
+    {
+        std::cout << it->first << ": ";
+        for (auto w : it->second)
+            std::cout << w << " ";
+        std::cout << "\n";
     }
-    std::cout << result.size() << "\n";
-    for(auto w : result)
-        std::cout << w;
+    std::cout << anagrams_map.size() << "\n";
+    std::cout << size << "\n";
+
+    
+    std::vector<encoded_word> result;
+
+    // MAIN LOOPS
+    // for(int i=0; i < size - 4; i++){
+
+    //     for (int j=i+1; j < size - 3; j++){
+    //         if((words[i].bword & words[j].bword) == 0){
+    //             encoded_word double_word = { words[i].word + words[j].word,
+    //                                          words[i].bword | words[j].bword };
+
+    //             for(int k = j+1; k < size-2; k++){
+    //                 if ((double_word.bword & words[k].bword) == 0){
+    //                     encoded_word triple_word = {double_word.word + words[k].word,
+    //                                                 double_word.bword | words[k].bword};
+
+    //                     for (int l = k + 1; l < size-1; l++)
+    //                     {
+    //                         if ((triple_word.bword & words[l].bword) == 0)
+    //                         {
+    //                             encoded_word quad_word = {triple_word.word + words[l].word,
+    //                                                         triple_word.bword | words[l].bword};
+
+    //                             for (int m = l + 1; m < size; m++)
+    //                             {
+    //                                 if ((quad_word.bword & words[m].bword) == 0)
+    //                                 {
+    //                                     encoded_word pent_word = {quad_word.word + words[m].word,
+    //                                                               quad_word.bword | words[m].bword};
+    //                                     result.push_back(pent_word);
+    //                                 }
+    //                             }
+    //                         }
+    //                     }
+                        
+    //                 }
+    //             } 
+    //         }
+    //     }
+    // }
+
+    // std::cout << result.size() << "\n";
+    // for(auto w : result)
+    //     std::cout << w;
 
 
 
