@@ -68,7 +68,9 @@ int main(){
     // std::array<std::vector<std::string>, 26> alphabetical_words;
 
     auto start = std::chrono::high_resolution_clock::now();
+    // std::ifstream dictionary("in_words.txt");
     std::ifstream dictionary("words_alpha_five.txt");
+
     while (!dictionary.eof())
     {
         std::string word;
@@ -94,66 +96,102 @@ int main(){
     int size = dict.size();
     
     // for confirmation that the map works correctly
-    for (auto it = anagrams_map.begin(); it != anagrams_map.end(); it++)
-    {
-        std::cout << it->first << ": ";
-        for (auto w : it->second)
-            std::cout << w << " ";
-        std::cout << "\n";
-    }
-    std::cout << anagrams_map.size() << "\n";
-    std::cout << size << "\n";
+    // for (auto it = anagrams_map.begin(); it != anagrams_map.end(); it++)
+    // {
+    //     std::cout << it->first << ": ";
+    //     for (auto w : it->second)
+    //         std::cout << w << " ";
+    //     std::cout << "\n";
+    // }
+
+    // std::cout << anagrams_map.size() << "\n";
+    // std::cout << size << "\n";
 
     
     std::vector<encoded_word> result;
 
     // MAIN LOOPS
-    // for(int i=0; i < size - 4; i++){
+    for(int i=0; i < size - 4; i++){
 
-    //     for (int j=i+1; j < size - 3; j++){
-    //         if((words[i].bword & words[j].bword) == 0){
-    //             encoded_word double_word = { words[i].word + words[j].word,
-    //                                          words[i].bword | words[j].bword };
+        for (int j=i+1; j < size - 3; j++){
+            if((words[i].bword & words[j].bword) == 0){
+                encoded_word double_word = { words[i].word + words[j].word,
+                                             words[i].bword | words[j].bword };
 
-    //             for(int k = j+1; k < size-2; k++){
-    //                 if ((double_word.bword & words[k].bword) == 0){
-    //                     encoded_word triple_word = {double_word.word + words[k].word,
-    //                                                 double_word.bword | words[k].bword};
+                for(int k = j+1; k < size-2; k++){
+                    if ((double_word.bword & words[k].bword) == 0){
+                        encoded_word triple_word = {double_word.word + words[k].word,
+                                                    double_word.bword | words[k].bword};
 
-    //                     for (int l = k + 1; l < size-1; l++)
-    //                     {
-    //                         if ((triple_word.bword & words[l].bword) == 0)
-    //                         {
-    //                             encoded_word quad_word = {triple_word.word + words[l].word,
-    //                                                         triple_word.bword | words[l].bword};
+                        for (int l = k + 1; l < size-1; l++)
+                        {
+                            if ((triple_word.bword & words[l].bword) == 0)
+                            {
+                                encoded_word quad_word = {triple_word.word + words[l].word,
+                                                            triple_word.bword | words[l].bword};
 
-    //                             for (int m = l + 1; m < size; m++)
-    //                             {
-    //                                 if ((quad_word.bword & words[m].bword) == 0)
-    //                                 {
-    //                                     encoded_word pent_word = {quad_word.word + words[m].word,
-    //                                                               quad_word.bword | words[m].bword};
-    //                                     result.push_back(pent_word);
-    //                                 }
-    //                             }
-    //                         }
-    //                     }
+                                for (int m = l + 1; m < size; m++)
+                                {
+                                    if ((quad_word.bword & words[m].bword) == 0)
+                                    {
+                                        encoded_word pent_word = {quad_word.word + words[m].word,
+                                                                  quad_word.bword | words[m].bword};
+                                        result.push_back(pent_word);
+                                    }
+                                }
+                            }
+                        }
                         
-    //                 }
-    //             } 
-    //         }
-    //     }
-    // }
+                    }
+                } 
+            }
+        }
+    }
 
     // std::cout << result.size() << "\n";
     // for(auto w : result)
     //     std::cout << w;
 
 
+    // adding anagrams back
+    std::vector<std::array<std::string, 5>> final_words;
+    for(auto w : result){
+        std::array<std::string, 5> five_words;
+        for(int i=0; i<5; i++){
+            five_words[i] = w.word.substr(5*i, 5);
+        }
+
+        final_words.push_back(five_words);
+
+        for (int i = 0; i < 5; i++){
+            int word_hash = getHash(five_words[i]);
+            std::vector<std::string> tmp_vect = anagrams_map.at(word_hash);
+            if(tmp_vect.size() > 1){
+                for(auto st : tmp_vect){
+                    five_words[i] = st;
+                    if (st != tmp_vect.front())
+                        final_words.push_back(five_words);
+                }
+            }
+        }
+        
+    }
+
+    // Printing results
+    std::ofstream outfile("results.txt");
+    outfile << final_words.size();
+    for(auto arr : final_words){
+        for (auto w : arr)
+        {
+            outfile << w << " ";
+        }
+        outfile << "\n";
+    }
+
 
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-    std::cout << "\nExecution time: " << duration.count() << " microseconds\n";
+    outfile << "\nExecution time: " << duration.count() << " microseconds\n";
 }
 
 /*
