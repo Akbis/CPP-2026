@@ -179,7 +179,7 @@ int main(){
 
     // Printing results
     std::ofstream outfile("results.txt");
-    outfile << final_words.size();
+    outfile << final_words.size() << "\n";
     for(auto arr : final_words){
         for (auto w : arr)
         {
