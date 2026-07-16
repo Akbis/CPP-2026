@@ -11,7 +11,7 @@ Palindromes - find all palindromes in given dictionary. Requires: file handling,
 Crosswords - find all words that match given pattern. Same requirements as palindromes. Working version completed: 02.03.2026
 
 ## Projects in progress
-Wordle - find all sets of 5 5-lettered words that have 25 different letters. Will require file handling. Might be computationally complex. I will create several working versions to work on improving execution time.
+Wordle - find all sets of 5 5-lettered words that have 25 different letters. Will require file handling. Might be computationally complex. I will create several working versions to work on improving execution time. Version completed on 16.07 - 1136,73 seconds
 
 ## Planned projects
 
